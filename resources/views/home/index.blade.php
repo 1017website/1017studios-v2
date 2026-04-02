@@ -15,7 +15,7 @@
     <div class="hero-content">
         <div class="hero-eyebrow">
             <div class="hero-eyebrow-line"></div>
-            <span class="label">Est. 2019 &nbsp;·&nbsp; Surabaya, Indonesia</span>
+            <span class="label">Est. 2014 &nbsp;·&nbsp; Surabaya, Indonesia</span>
         </div>
 
         <h1 class="hero-title">
