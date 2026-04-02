@@ -19,7 +19,7 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $keys = [
-            'company_name', 'tagline', 'email', 'whatsapp', 'address',
+            'company_name', 'tagline', 'email', 'whatsapp', 'address', 'maps_url',
             'stat_projects', 'stat_clients', 'stat_years', 'stat_satisfaction',
             'instagram', 'linkedin', 'meta_description',
         ];

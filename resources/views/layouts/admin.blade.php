@@ -10,8 +10,40 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        /* Critical cursor styles — inline so they always load */
+        :root {
+            --bg: #141414; --bg-2: #1c1c1c; --bg-3: #232323;
+            --white: #f0ede8; --mid-gray: #888;
+            --border: rgba(255,255,255,0.08);
+            --accent: #d4c5a9;
+            --ease: cubic-bezier(0.16,1,0.3,1);
+        }
+        body { background: var(--bg); color: var(--white); cursor: none; }
+        .cursor {
+            width: 10px; height: 10px; background: #f0ede8;
+            border-radius: 50%; position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 999999;
+            transform: translate(-50%,-50%);
+            mix-blend-mode: difference; will-change: left, top;
+            transition: width .18s, height .18s;
+        }
+        .cursor.hover { width: 18px; height: 18px; }
+        .cursor-follower {
+            width: 40px; height: 40px;
+            border: 1.5px solid rgba(240,237,232,0.28);
+            border-radius: 50%; position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 999998;
+            transform: translate(-50%,-50%); will-change: left, top;
+            transition: width .28s var(--ease), height .28s var(--ease), border-color .28s;
+        }
+        .cursor-follower.hover { width: 64px; height: 64px; border-color: rgba(240,237,232,0.5); }
+        @media (max-width: 768px) { body { cursor: auto; } .cursor, .cursor-follower { display: none !important; } }
+    </style>
 </head>
 <body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
 <div class="noise-overlay"></div>
 <div class="admin-layout">
 

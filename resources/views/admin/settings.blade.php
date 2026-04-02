@@ -32,9 +32,16 @@
                     <small style="color:rgba(255,255,255,.3);font-size:.72rem">Format: 628xxxxxxxxxx (country code, no +)</small>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Address</label>
-                <textarea name="address" class="form-textarea" rows="2">{{ old('address', $settings['address'] ?? '') }}</textarea>
+            <div class="admin-form-row">
+                <div class="form-group">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-textarea" rows="2">{{ old('address', $settings['address'] ?? '') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Google Maps URL <span style="color:rgba(240,237,232,.3)">(opsional — override otomatis)</span></label>
+                    <input type="url" name="maps_url" class="form-input" value="{{ old('maps_url', $settings['maps_url'] ?? '') }}" placeholder="https://maps.app.goo.gl/...">
+                    <small style="color:rgba(240,237,232,.3);font-size:.72rem">Kosongkan = otomatis generate dari Address. Isi = pakai link spesifik (lebih akurat)</small>
+                </div>
             </div>
         </div>
     </div>

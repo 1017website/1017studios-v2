@@ -20,6 +20,10 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'sendMessage'])->name('contact.send');
 
+// ---- SEO ----
+Route::get('/sitemap.xml', [HomeController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt',  [HomeController::class, 'robots'])->name('robots');
+
 // ============================================================
 // ADMIN AUTH
 // ============================================================
