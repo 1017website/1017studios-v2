@@ -24,7 +24,7 @@
     --font-serif:   'Instrument Serif', serif;
     --font-body:    'DM Sans', sans-serif;
 
-    --nav-h:      80px;
+    --nav-h:      86px;
     --section-gap: clamp(80px, 12vw, 160px);
     --container:  1320px;
     --ease:       cubic-bezier(0.16, 1, 0.3, 1);
@@ -137,8 +137,24 @@ a  { text-decoration: none; color: inherit; }
     height: 100%;
     display: flex; align-items: center; justify-content: space-between;
 }
-.nav-logo { display: flex; align-items: center; }
-.logo-img  { height: 40px; width: auto; filter: brightness(0) invert(0.92); }
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.logo-img  { height: 40px; width: auto; filter: brightness(0) invert(0.92); flex-shrink: 0; }
+
+/* Tagline beside logo — hidden on scroll, visible always */
+.nav-logo-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.3);
+    font-family: var(--font-body);
+    font-weight: 400;
+    padding-left: 12px;
+    border-left: 1px solid rgba(240,237,232,0.12);
+    line-height: 1.3;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+}
+@media (max-width: 900px) { .nav-logo-tag { display: none; } }
 
 .nav-links { display: flex; align-items: center; gap: 2.5rem; }
 .nav-link {

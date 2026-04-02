@@ -15,7 +15,7 @@
     <div class="hero-content">
         <div class="hero-eyebrow">
             <div class="hero-eyebrow-line"></div>
-            <span class="label">Branding & Digital Studio</span>
+            <span class="label">Est. 2019 &nbsp;·&nbsp; Surabaya, Indonesia</span>
         </div>
 
         <h1 class="hero-title">

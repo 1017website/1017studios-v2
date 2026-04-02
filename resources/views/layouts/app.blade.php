@@ -157,6 +157,7 @@
         <div class="nav-inner">
             <a href="{{ route('home') }}" class="nav-logo">
                 <img src="{{ asset('images/logo.png') }}" alt="1017Studios" class="logo-img">
+                <span class="nav-logo-tag">Branding &amp; Digital Studio</span>
             </a>
             <div class="nav-links">
                 <a href="{{ route('home') }}"      class="nav-link {{ request()->routeIs('home')      ? 'active' : '' }}">Home</a>

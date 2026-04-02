@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\UserController;
 
 // ============================================================
 // PUBLIC ROUTES
@@ -20,20 +21,19 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'sendMessage'])->name('contact.send');
 
-// ---- SEO ----
+// SEO
 Route::get('/sitemap.xml', [HomeController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt',  [HomeController::class, 'robots'])->name('robots');
 
 // ============================================================
-// ADMIN AUTH
+// ADMIN
 // ============================================================
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/login',  [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
-    // Protected admin routes
     Route::middleware('auth')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -48,12 +48,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('testimonials', TestimonialController::class)->except(['show']);
 
         // Messages
-        Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-        Route::get('/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
+        Route::get('/messages',              [MessageController::class, 'index'])->name('messages.index');
+        Route::get('/messages/{message}',    [MessageController::class, 'show'])->name('messages.show');
         Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 
         // Settings
-        Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+        Route::get('/settings',  [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+        // Users
+        Route::resource('users', UserController::class)->except(['show']);
+        Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+
+        // My Profile & Password
+        Route::get('/profile',           [UserController::class, 'profile'])->name('profile');
+        Route::post('/profile',          [UserController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
     });
 });
