@@ -122,81 +122,102 @@
 {{-- ============================================================
      LIGHTBOX MODAL — image preview
      ============================================================ --}}
-<div id="lightbox" style="
-    display:none; position:fixed; inset:0; z-index:99990;
-    background:rgba(10,10,10,0.95); backdrop-filter:blur(12px);
-    align-items:center; justify-content:center; padding:2rem;
-    flex-direction:column;
-" onclick="closeLightbox(event)">
+<div id="lightbox" aria-modal="true" role="dialog"
+     style="display:none;position:fixed;inset:0;z-index:99990;
+            background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);
+            align-items:center;justify-content:center;padding:2rem;
+            flex-direction:column;">
 
     {{-- Close button --}}
-    <button onclick="closeLightboxDirect()" style="
-        position:absolute; top:1.5rem; right:1.5rem;
-        background:none; border:1px solid rgba(240,237,232,.2);
-        color:var(--white); width:44px; height:44px; border-radius:50%;
-        font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
-        transition:all .2s; z-index:2;
-    " onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='none'">
+    <button id="lbClose"
+            style="position:absolute;top:1.5rem;right:1.5rem;
+                   background:none;border:1px solid rgba(240,237,232,.2);
+                   color:var(--white);width:44px;height:44px;border-radius:50%;
+                   font-size:1.1rem;cursor:pointer;display:flex;align-items:center;
+                   justify-content:center;transition:background .2s;z-index:2;">
         ✕
     </button>
 
-    {{-- Image --}}
-    <div style="position:relative; max-width:90vw; max-height:82vh; z-index:1;">
+    {{-- Image wrapper — clicking inside here does NOT close --}}
+    <div id="lbImgWrap" style="position:relative;max-width:90vw;max-height:80vh;z-index:1;">
         <img id="lightboxImg" src="" alt=""
-             style="max-width:100%; max-height:80vh; object-fit:contain; display:block; border-radius:2px;">
+             style="max-width:100%;max-height:78vh;object-fit:contain;display:block;border-radius:2px;">
     </div>
 
     {{-- Caption --}}
-    <div style="margin-top:1.2rem; text-align:center; z-index:1;">
+    <div style="margin-top:1.2rem;text-align:center;z-index:1;pointer-events:none;">
         <div id="lightboxTitle" style="font-family:var(--font-display);font-size:1.4rem;letter-spacing:.08em;color:var(--white)"></div>
         <div id="lightboxCat"   style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid-gray);margin-top:.3rem"></div>
-        <p style="font-size:.75rem;color:rgba(240,237,232,.25);margin-top:.75rem">Klik di luar gambar atau tekan ESC untuk menutup</p>
+        <p style="font-size:.74rem;color:rgba(240,237,232,.22);margin-top:.75rem">Klik di luar gambar atau tekan ESC untuk menutup</p>
     </div>
 </div>
 
 <style>
-#lightbox.open { display:flex !important; animation: fadeIn .25s ease; }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-#lightboxImg { animation: scaleIn .3s cubic-bezier(0.16,1,0.3,1); }
-@keyframes scaleIn { from { transform:scale(0.92); opacity:0; } to { transform:scale(1); opacity:1; } }
-.portfolio-item[onclick] { cursor: pointer; }
+#lightbox.lb-open  { display:flex !important; }
+#lightbox          { animation:none; }
+#lightbox.lb-open  { animation: lbFadeIn .22s ease forwards; }
+@keyframes lbFadeIn  { from{opacity:0} to{opacity:1} }
+#lbImgWrap img     { animation: lbScaleIn .3s cubic-bezier(0.16,1,0.3,1) forwards; }
+@keyframes lbScaleIn { from{transform:scale(0.92);opacity:0} to{transform:scale(1);opacity:1} }
+#lbClose:hover     { background:rgba(255,255,255,.12) !important; }
+.portfolio-item[onclick] { cursor:pointer; }
 </style>
 
 <script>
-function openLightbox(src, title, category) {
-    const lb    = document.getElementById('lightbox');
-    const img   = document.getElementById('lightboxImg');
-    const ttl   = document.getElementById('lightboxTitle');
-    const cat   = document.getElementById('lightboxCat');
-    img.src     = src;
-    img.alt     = title;
-    ttl.textContent = title;
-    cat.textContent = category;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
+(function () {
+    var lb      = document.getElementById('lightbox');
+    var lbImg   = document.getElementById('lightboxImg');
+    var lbTitle = document.getElementById('lightboxTitle');
+    var lbCat   = document.getElementById('lightboxCat');
+    var lbWrap  = document.getElementById('lbImgWrap');
+    var lbClose = document.getElementById('lbClose');
 
-function closeLightbox(e) {
-    // Only close if clicking the backdrop, not the image/caption
-    if (e.target === document.getElementById('lightbox')) {
-        closeLightboxDirect();
+    // Open
+    window.openLightbox = function (src, title, category) {
+        lbImg.src         = src;
+        lbImg.alt         = title;
+        lbTitle.textContent = title;
+        lbCat.textContent   = category;
+        lb.style.display  = 'flex';
+        // rAF so display:flex renders before class triggers animation
+        requestAnimationFrame(function () {
+            lb.classList.add('lb-open');
+        });
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Close
+    function closeLightbox() {
+        lb.classList.remove('lb-open');
+        lb.style.display = 'none';
+        lbImg.src        = '';
+        document.body.style.overflow = '';
     }
-}
 
-function closeLightboxDirect() {
-    const lb = document.getElementById('lightbox');
-    lb.classList.remove('open');
-    lb.style.display = 'none';
-    // Reset display after transition
-    setTimeout(() => { lb.style.display = ''; }, 10);
-    document.body.style.overflow = '';
-    document.getElementById('lightboxImg').src = '';
-}
+    // Close button
+    lbClose.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeLightbox();
+    });
 
-// ESC key to close
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightboxDirect();
-});
+    // Click on backdrop (not on image or caption)
+    lb.addEventListener('click', function (e) {
+        // if click target is the lightbox itself (backdrop), close
+        if (e.target === lb) {
+            closeLightbox();
+        }
+    });
+
+    // Stop image/caption clicks from bubbling to backdrop
+    lbWrap.addEventListener('click', function (e) { e.stopPropagation(); });
+
+    // ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lb.classList.contains('lb-open')) {
+            closeLightbox();
+        }
+    });
+})();
 </script>
 
 @endsection
