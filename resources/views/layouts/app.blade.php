@@ -7,8 +7,6 @@
 
     @php
         // ── SEO variables ──────────────────────────────────────────
-        // $seo array is enriched by SeoComposer (from seo_settings DB table)
-        // DB values override controller defaults automatically.
         $seoTitle     = $seo['title']       ?? ($title ?? '1017Studios') . ' | Branding & Digital Agency';
         $seoDesc      = $seo['description'] ?? $meta_description ?? '1017Studios adalah studio branding dan teknologi di Surabaya. Kami merancang identitas brand, memproduksi video, dan membangun website serta aplikasi berkelas dunia.';
         $seoKeywords  = $seo['keywords']    ?? 'branding agency surabaya, jasa logo, desain brand, web developer surabaya, pembuatan website, jasa aplikasi, video production, 1017studios';
@@ -19,11 +17,6 @@
         $siteName     = '1017Studios';
         $siteUrl      = config('app.url');
         $seoLocale    = 'id_ID';
-
-        // ── Open Graph overrides from DB (SeoComposer) ─────────────
-        $ogTitle       = $seo['og_title']       ?? $seoTitle;
-        $ogDescription = $seo['og_description'] ?? $seoDesc;
-        $ogImage       = $seo['image']          ?? asset('images/og-image.jpg');
 
         // ── Build sameAs array cleanly (no @if inside JSON) ────────
         $sameAs = [];
@@ -83,9 +76,9 @@
     {{-- ── Open Graph ─────────────────────────────────────────── --}}
     <meta property="og:type"        content="{{ $seoType }}">
     <meta property="og:url"         content="{{ $seoCanonical }}">
-    <meta property="og:title"       content="{{ $ogTitle }}">
-    <meta property="og:description" content="{{ $ogDescription }}">
-    <meta property="og:image"       content="{{ $ogImage }}">
+    <meta property="og:title"       content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDesc }}">
+    <meta property="og:image"       content="{{ $seoImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height"content="630">
     <meta property="og:image:alt"   content="{{ $siteName }}">
@@ -94,18 +87,16 @@
 
     {{-- ── Twitter / X Card ───────────────────────────────────── --}}
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="{{ $ogTitle }}">
-    <meta name="twitter:description" content="{{ $ogDescription }}">
-    <meta name="twitter:image"       content="{{ $ogImage }}">
+    <meta name="twitter:title"       content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDesc }}">
+    <meta name="twitter:image"       content="{{ $seoImage }}">
     <meta name="twitter:image:alt"   content="{{ $siteName }}">
 
-    {{-- ── JSON-LD default (built in PHP above) ──────────────── --}}
+    {{-- ── JSON-LD Structured Data (built safely in PHP above) ── --}}
     <script type="application/ld+json">{!! $jsonLdString !!}</script>
 
-    {{-- ── Custom JSON-LD from Admin SEO Settings (overrides per page) --}}
-    @if(!empty($customSchemaJson))
-    <script type="application/ld+json">{!! $customSchemaJson !!}</script>
-    @endif
+    {{-- ── Per-page structured data slot ────────────────────── --}}
+    @yield('structured_data')
 
     {{-- ── Favicon ─────────────────────────────────────────────── --}}
     <link rel="icon"             type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}">
@@ -203,6 +194,38 @@
             <div class="footer-brand">
                 <img src="{{ asset('images/logo.png') }}" alt="1017Studios" class="footer-logo">
                 <p class="footer-tagline">{{ $settings['tagline'] ?? 'We build brands that move people.' }}</p>
+
+                {{-- Social Media Icons — dari CMS Settings --}}
+                @if(!empty($settings['instagram']) || !empty($settings['linkedin']))
+                <div style="display:flex;gap:.75rem;margin-top:1.5rem">
+                    @if(!empty($settings['instagram']))
+                    <a href="{{ $settings['instagram'] }}" target="_blank" rel="noopener noreferrer"
+                       style="width:36px;height:36px;border:1px solid rgba(240,237,232,.12);display:flex;align-items:center;justify-content:center;color:rgba(240,237,232,.35);transition:all .2s;border-radius:2px"
+                       title="Instagram 1017Studios"
+                       onmouseover="this.style.borderColor='rgba(240,237,232,.4)';this.style.color='var(--white)'"
+                       onmouseout="this.style.borderColor='rgba(240,237,232,.12)';this.style.color='rgba(240,237,232,.35)'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </a>
+                    @endif
+                    @if(!empty($settings['linkedin']))
+                    <a href="{{ $settings['linkedin'] }}" target="_blank" rel="noopener noreferrer"
+                       style="width:36px;height:36px;border:1px solid rgba(240,237,232,.12);display:flex;align-items:center;justify-content:center;color:rgba(240,237,232,.35);transition:all .2s;border-radius:2px"
+                       title="LinkedIn 1017Studios"
+                       onmouseover="this.style.borderColor='rgba(240,237,232,.4)';this.style.color='var(--white)'"
+                       onmouseout="this.style.borderColor='rgba(240,237,232,.12)';this.style.color='rgba(240,237,232,.35)'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+                            <rect x="2" y="9" width="4" height="12"/>
+                            <circle cx="4" cy="4" r="2"/>
+                        </svg>
+                    </a>
+                    @endif
+                </div>
+                @endif
             </div>
             <div class="footer-col">
                 <h4 class="footer-heading">Services</h4>
@@ -230,6 +253,37 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; {{ date('Y') }} 1017Studios. All rights reserved.</p>
+            {{-- Social icons di footer-bottom — terlihat di semua ukuran layar --}}
+            @if(!empty($settings['instagram']) || !empty($settings['linkedin']))
+            <div style="display:flex;gap:.5rem">
+                @if(!empty($settings['instagram']))
+                <a href="{{ $settings['instagram'] }}" target="_blank" rel="noopener noreferrer"
+                   style="color:rgba(240,237,232,.25);transition:color .2s"
+                   title="Instagram"
+                   onmouseover="this.style.color='rgba(240,237,232,.7)'"
+                   onmouseout="this.style.color='rgba(240,237,232,.25)'">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                    </svg>
+                </a>
+                @endif
+                @if(!empty($settings['linkedin']))
+                <a href="{{ $settings['linkedin'] }}" target="_blank" rel="noopener noreferrer"
+                   style="color:rgba(240,237,232,.25);transition:color .2s"
+                   title="LinkedIn"
+                   onmouseover="this.style.color='rgba(240,237,232,.7)'"
+                   onmouseout="this.style.color='rgba(240,237,232,.25)'">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+                @endif
+            </div>
+            @endif
             <p class="footer-credit">Crafted with intention.</p>
         </div>
     </footer>
