@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SeoController;         // ← NEW
+use App\Http\Controllers\Admin\AnalyticsController;   // ← NEW
 
 // ============================================================
 // PUBLIC ROUTES
@@ -64,5 +66,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/profile',           [UserController::class, 'profile'])->name('profile');
         Route::post('/profile',          [UserController::class, 'updateProfile'])->name('profile.update');
         Route::post('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
+
+        // ── SEO Settings ─────────────────────────────────────────── NEW ──
+        Route::get('/seo',  [SeoController::class, 'index'])->name('seo');
+        Route::post('/seo', [SeoController::class, 'update'])->name('seo.update');
+
+        // ── Visitor Analytics ─────────────────────────────────────── NEW ──
+        Route::get('/analytics',  [AnalyticsController::class, 'index'])->name('analytics');
+        Route::post('/analytics/purge', [AnalyticsController::class, 'purge'])->name('analytics.purge');
     });
 });

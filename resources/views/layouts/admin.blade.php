@@ -85,6 +85,23 @@
                 Settings
             </a>
 
+            {{-- ── NEW: SEO & Analytics ──────────────────────────────── --}}
+            <div class="admin-nav-section">Growth</div>
+            <a href="{{ route('admin.seo') }}" class="admin-nav-item {{ request()->routeIs('admin.seo') ? 'active' : '' }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <path d="M11 8v3l2 2"/>
+                </svg>
+                SEO Settings
+            </a>
+            <a href="{{ route('admin.analytics') }}" class="admin-nav-item {{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                Analytics
+            </a>
+            {{-- ────────────────────────────────────────────────────── --}}
+
             <div class="admin-nav-section">Account</div>
             <a href="{{ route('admin.users.index') }}" class="admin-nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
@@ -130,8 +147,7 @@
             @endif
             @if (session('error'))
                 <div class="flash-message" style="background:rgba(255,80,80,.06);border:1px solid rgba(255,80,80,.2);padding:1rem 1.5rem;margin-bottom:1.5rem;font-size:.88rem;color:rgba(255,120,120,.9);transition:opacity .4s">
-                    ✕ &nbsp;{{ session('error') }}
-                </div>
+                    ✕ &nbsp;{{ session('error') }}\n                </div>
             @endif
 
             @yield('admin-content')
