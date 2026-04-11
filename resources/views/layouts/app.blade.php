@@ -7,6 +7,8 @@
 
     @php
         // ── SEO variables ──────────────────────────────────────────
+        // $seo array is enriched by SeoComposer (from seo_settings DB table)
+        // DB values override controller defaults automatically.
         $seoTitle     = $seo['title']       ?? ($title ?? '1017Studios') . ' | Branding & Digital Agency';
         $seoDesc      = $seo['description'] ?? $meta_description ?? '1017Studios adalah studio branding dan teknologi di Surabaya. Kami merancang identitas brand, memproduksi video, dan membangun website serta aplikasi berkelas dunia.';
         $seoKeywords  = $seo['keywords']    ?? 'branding agency surabaya, jasa logo, desain brand, web developer surabaya, pembuatan website, jasa aplikasi, video production, 1017studios';
@@ -17,6 +19,11 @@
         $siteName     = '1017Studios';
         $siteUrl      = config('app.url');
         $seoLocale    = 'id_ID';
+
+        // ── Open Graph overrides from DB (SeoComposer) ─────────────
+        $ogTitle       = $seo['og_title']       ?? $seoTitle;
+        $ogDescription = $seo['og_description'] ?? $seoDesc;
+        $ogImage       = $seo['image']          ?? asset('images/og-image.jpg');
 
         // ── Build sameAs array cleanly (no @if inside JSON) ────────
         $sameAs = [];
@@ -76,9 +83,9 @@
     {{-- ── Open Graph ─────────────────────────────────────────── --}}
     <meta property="og:type"        content="{{ $seoType }}">
     <meta property="og:url"         content="{{ $seoCanonical }}">
-    <meta property="og:title"       content="{{ $seoTitle }}">
-    <meta property="og:description" content="{{ $seoDesc }}">
-    <meta property="og:image"       content="{{ $seoImage }}">
+    <meta property="og:title"       content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    <meta property="og:image"       content="{{ $ogImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height"content="630">
     <meta property="og:image:alt"   content="{{ $siteName }}">
@@ -87,16 +94,18 @@
 
     {{-- ── Twitter / X Card ───────────────────────────────────── --}}
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="{{ $seoTitle }}">
-    <meta name="twitter:description" content="{{ $seoDesc }}">
-    <meta name="twitter:image"       content="{{ $seoImage }}">
+    <meta name="twitter:title"       content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    <meta name="twitter:image"       content="{{ $ogImage }}">
     <meta name="twitter:image:alt"   content="{{ $siteName }}">
 
-    {{-- ── JSON-LD Structured Data (built safely in PHP above) ── --}}
+    {{-- ── JSON-LD default (built in PHP above) ──────────────── --}}
     <script type="application/ld+json">{!! $jsonLdString !!}</script>
 
-    {{-- ── Per-page structured data slot ────────────────────── --}}
-    @yield('structured_data')
+    {{-- ── Custom JSON-LD from Admin SEO Settings (overrides per page) --}}
+    @if(!empty($customSchemaJson))
+    <script type="application/ld+json">{!! $customSchemaJson !!}</script>
+    @endif
 
     {{-- ── Favicon ─────────────────────────────────────────────── --}}
     <link rel="icon"             type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}">
