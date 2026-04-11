@@ -7,7 +7,6 @@
         <h1 class="admin-page-title" style="margin-bottom:.25rem">Visitor Analytics</h1>
         <p class="admin-page-sub">Track page views, unique visitors, devices, and traffic sources.</p>
     </div>
-    {{-- Range selector --}}
     <form method="GET" action="{{ route('admin.analytics') }}" style="display:flex;gap:.5rem;align-items:center">
         <select name="range" onchange="this.form.submit()"
             style="background:var(--bg-3);border:1px solid rgba(255,255,255,.12);color:var(--white);padding:.5rem .85rem;font-size:.82rem;font-family:inherit;cursor:pointer">
@@ -19,7 +18,7 @@
     </form>
 </div>
 
-{{-- Summary Cards --}}
+{{-- Visitor Summary Cards --}}
 <div class="admin-stats" style="grid-template-columns:repeat(5,1fr);margin-bottom:2rem">
     <div class="admin-stat-card">
         <div class="admin-stat-value">{{ number_format($totalViews) }}</div>
@@ -43,6 +42,90 @@
     </div>
 </div>
 
+{{-- ── Google API Budget Monitor ─────────────────────────────────────────── --}}
+<div class="admin-section-card" style="margin-bottom:2rem;border-color:{{ $googleUsage['is_exceeded'] ? 'rgba(255,100,100,.3)' : 'rgba(255,255,255,.08)' }}">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
+        <div>
+            <div class="admin-section-card-title" style="margin:0">
+                Google Places API — Budget Monitor
+                @if($googleUsage['is_exceeded'])
+                    <span style="margin-left:.75rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,100,100,.8);border:1px solid rgba(255,100,100,.3);padding:2px 8px">LIMIT REACHED</span>
+                @else
+                    <span style="margin-left:.75rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(100,220,100,.7);border:1px solid rgba(100,220,100,.2);padding:2px 8px">ACTIVE</span>
+                @endif
+            </div>
+            <div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.3rem">
+                Cache: {{ $googleUsage['cache_ttl'] }} menit &nbsp;·&nbsp; Status: {{ $googleUsage['cache_expires'] }}
+            </div>
+        </div>
+        <div style="display:flex;gap:.75rem">
+            {{-- Refresh cache --}}
+            <form method="POST" action="{{ route('admin.reviews.refresh') }}">
+                @csrf
+                <button type="submit"
+                    style="padding:.5rem 1.1rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit;transition:all .2s"
+                    onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.4)'"
+                    onmouseout="this.style.color='rgba(255,255,255,.6)';this.style.borderColor='rgba(255,255,255,.15)'">
+                    ↻ Refresh Cache
+                </button>
+            </form>
+            {{-- Reset counter --}}
+            <form method="POST" action="{{ route('admin.analytics.reset-google') }}"
+                  onsubmit="return confirm('Reset counter API Google bulan ini? Hanya lakukan jika yakin limit belum tercapai.')">
+                @csrf
+                <button type="submit"
+                    style="padding:.5rem 1.1rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,100,100,.2);background:transparent;color:rgba(255,120,120,.6);cursor:pointer;font-family:inherit;transition:all .2s"
+                    onmouseover="this.style.color='rgba(255,120,120,.9)';this.style.borderColor='rgba(255,100,100,.5)'"
+                    onmouseout="this.style.color='rgba(255,120,120,.6)';this.style.borderColor='rgba(255,100,100,.2)'">
+                    Reset Counter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+            <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">{{ $googleUsage['count'] }}</div>
+            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Request Bulan Ini</div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+            <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">{{ $googleUsage['limit'] }}</div>
+            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Batas Bulanan</div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+            <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">${{ $googleUsage['estimated_cost'] }}</div>
+            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Estimasi Biaya</div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+            <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">{{ $googleUsage['remaining'] }}</div>
+            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Sisa Request</div>
+        </div>
+    </div>
+
+    {{-- Progress bar --}}
+    <div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.35);margin-bottom:.5rem">
+            <span>Penggunaan bulan ini</span>
+            <span>{{ $googleUsage['percentage'] }}% dari limit</span>
+        </div>
+        <div style="background:rgba(255,255,255,.06);height:6px;border-radius:3px">
+            <div style="
+                width:{{ $googleUsage['percentage'] }}%;
+                height:100%;
+                border-radius:3px;
+                background:{{ $googleUsage['percentage'] >= 100 ? 'rgba(255,80,80,.8)' : ($googleUsage['percentage'] >= 80 ? 'rgba(255,180,50,.8)' : 'var(--accent)') }};
+                transition:width .6s
+            "></div>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.25);margin-top:.6rem">
+            Free tier Google: ~{{ number_format($googleUsage['free_tier_max']) }} request/bulan ($200 credit).
+            Limit Anda: {{ $googleUsage['limit'] }} request — <strong style="color:rgba(255,255,255,.4)">jauh di bawah biaya</strong>.
+            Ubah via <code style="font-size:.7rem;background:rgba(255,255,255,.06);padding:1px 5px">GOOGLE_REVIEWS_MONTHLY_LIMIT</code> di .env
+        </div>
+    </div>
+</div>
+{{-- ────────────────────────────────────────────────────────────────────── --}}
+
 {{-- Daily Chart --}}
 <div class="admin-section-card" style="margin-bottom:2rem">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
@@ -56,8 +139,6 @@
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem">
-
-    {{-- Top Pages --}}
     <div class="admin-section-card">
         <div class="admin-section-card-title">Top Pages</div>
         @forelse($topPages as $pg)
@@ -68,7 +149,7 @@
                 <span style="color:var(--mid-gray)">{{ number_format($pg->views) }} <span style="font-size:.72rem">({{ $pct }}%)</span></span>
             </div>
             <div style="background:rgba(255,255,255,.06);height:4px;border-radius:2px">
-                <div style="width:{{ $pct }}%;background:var(--accent);height:100%;border-radius:2px;transition:width .6s"></div>
+                <div style="width:{{ $pct }}%;background:var(--accent);height:100%;border-radius:2px"></div>
             </div>
         </div>
         @empty
@@ -76,7 +157,6 @@
         @endforelse
     </div>
 
-    {{-- Top Referrers --}}
     <div class="admin-section-card">
         <div class="admin-section-card-title">Traffic Sources</div>
         @forelse($topReferrers as $ref)
@@ -87,7 +167,7 @@
                 <span style="color:var(--mid-gray);white-space:nowrap;margin-left:.5rem">{{ number_format($ref->visits) }} <span style="font-size:.72rem">({{ $pct2 }}%)</span></span>
             </div>
             <div style="background:rgba(255,255,255,.06);height:4px;border-radius:2px">
-                <div style="width:{{ $pct2 }}%;background:rgba(212,197,169,.5);height:100%;border-radius:2px;transition:width .6s"></div>
+                <div style="width:{{ $pct2 }}%;background:rgba(212,197,169,.5);height:100%;border-radius:2px"></div>
             </div>
         </div>
         @empty
@@ -97,50 +177,35 @@
 </div>
 
 <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:2rem">
-
-    {{-- Monthly Chart --}}
     <div class="admin-section-card">
         <div class="admin-section-card-title">Monthly Overview ({{ now()->year }})</div>
         <canvas id="monthlyChart" height="110"></canvas>
     </div>
-
-    {{-- Device Breakdown --}}
     <div class="admin-section-card">
         <div class="admin-section-card-title">Device Breakdown</div>
         <canvas id="deviceChart" height="180"></canvas>
+        @php $dTotal = max($deviceDesktop + $deviceMobile + $deviceTablet, 1); @endphp
         <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem;font-size:.82rem">
-            @php
-                $dTotal = max($deviceDesktop + $deviceMobile + $deviceTablet, 1);
-            @endphp
             <div style="display:flex;justify-content:space-between">
-                <span style="display:flex;align-items:center;gap:.5rem">
-                    <span style="width:10px;height:10px;background:#d4c5a9;border-radius:50%;display:inline-block"></span> Desktop
-                </span>
+                <span><span style="width:10px;height:10px;background:#d4c5a9;border-radius:50%;display:inline-block;margin-right:.4rem"></span>Desktop</span>
                 <span style="color:var(--mid-gray)">{{ $deviceDesktop }} ({{ round($deviceDesktop/$dTotal*100) }}%)</span>
             </div>
             <div style="display:flex;justify-content:space-between">
-                <span style="display:flex;align-items:center;gap:.5rem">
-                    <span style="width:10px;height:10px;background:rgba(212,197,169,.5);border-radius:50%;display:inline-block"></span> Mobile
-                </span>
+                <span><span style="width:10px;height:10px;background:rgba(212,197,169,.5);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Mobile</span>
                 <span style="color:var(--mid-gray)">{{ $deviceMobile }} ({{ round($deviceMobile/$dTotal*100) }}%)</span>
             </div>
             <div style="display:flex;justify-content:space-between">
-                <span style="display:flex;align-items:center;gap:.5rem">
-                    <span style="width:10px;height:10px;background:rgba(212,197,169,.2);border-radius:50%;display:inline-block"></span> Tablet
-                </span>
+                <span><span style="width:10px;height:10px;background:rgba(212,197,169,.2);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Tablet</span>
                 <span style="color:var(--mid-gray)">{{ $deviceTablet }} ({{ round($deviceTablet/$dTotal*100) }}%)</span>
             </div>
         </div>
     </div>
 </div>
 
-{{-- Purge old data --}}
 <div style="text-align:right">
     <form method="POST" action="{{ route('admin.analytics.purge') }}" onsubmit="return confirm('Purge visitor logs older than 1 year?')">
         @csrf
-        <button type="submit" style="background:transparent;border:1px solid rgba(255,80,80,.25);color:rgba(255,120,120,.6);padding:.5rem 1.2rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all .2s"
-            onmouseover="this.style.borderColor='rgba(255,80,80,.5)';this.style.color='rgba(255,120,120,.9)'"
-            onmouseout="this.style.borderColor='rgba(255,80,80,.25)';this.style.color='rgba(255,120,120,.6)'">
+        <button type="submit" style="background:transparent;border:1px solid rgba(255,80,80,.25);color:rgba(255,120,120,.6);padding:.5rem 1.2rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit">
             Purge Old Logs (&gt;1 year)
         </button>
     </form>
@@ -151,101 +216,39 @@
 Chart.defaults.color = 'rgba(255,255,255,.35)';
 Chart.defaults.borderColor = 'rgba(255,255,255,.06)';
 Chart.defaults.font.family = 'DM Sans, sans-serif';
-
 const accent = '#d4c5a9';
-const accentFaded = 'rgba(212,197,169,0.2)';
 
-// ── Daily chart ─────────────────────────────────────────────────────────────
 new Chart(document.getElementById('dailyChart'), {
     type: 'line',
     data: {
         labels: @json($chartDates),
         datasets: [
-            {
-                label: 'Views',
-                data: @json($chartViews),
-                borderColor: accent,
-                backgroundColor: 'rgba(212,197,169,0.08)',
-                fill: true,
-                tension: 0.4,
-                pointRadius: @if(count($chartDates) > 30) 0 @else 3 @endif,
-                borderWidth: 1.5,
-            },
-            {
-                label: 'Unique Visitors',
-                data: @json($chartUniqueVisitors),
-                borderColor: 'rgba(212,197,169,0.35)',
-                backgroundColor: 'transparent',
-                fill: false,
-                tension: 0.4,
-                pointRadius: 0,
-                borderWidth: 1.5,
-                borderDash: [4, 3],
-            }
+            { label:'Views', data:@json($chartViews), borderColor:accent, backgroundColor:'rgba(212,197,169,0.08)', fill:true, tension:0.4, pointRadius:{{ count($chartDates) > 30 ? 0 : 3 }}, borderWidth:1.5 },
+            { label:'Unique', data:@json($chartUniqueVisitors), borderColor:'rgba(212,197,169,0.35)', fill:false, tension:0.4, pointRadius:0, borderWidth:1.5, borderDash:[4,3] }
         ]
     },
-    options: {
-        responsive: true,
-        interaction: { mode: 'index', intersect: false },
-        plugins: { legend: { display: false } },
-        scales: {
-            x: { ticks: { maxTicksLimit: 12 } },
-            y: { beginAtZero: true, ticks: { precision: 0 } }
-        }
-    }
+    options: { responsive:true, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{ x:{ticks:{maxTicksLimit:12}}, y:{beginAtZero:true,ticks:{precision:0}} } }
 });
 
-// ── Monthly chart ────────────────────────────────────────────────────────────
 new Chart(document.getElementById('monthlyChart'), {
     type: 'bar',
     data: {
         labels: @json($months),
         datasets: [
-            {
-                label: 'Views',
-                data: @json($monthViews2),
-                backgroundColor: 'rgba(212,197,169,0.25)',
-                borderColor: accent,
-                borderWidth: 1,
-                borderRadius: 3,
-            },
-            {
-                label: 'Unique',
-                data: @json($monthUnique),
-                backgroundColor: 'rgba(212,197,169,0.08)',
-                borderColor: 'rgba(212,197,169,0.3)',
-                borderWidth: 1,
-                borderRadius: 3,
-            }
+            { label:'Views', data:@json($monthViews2), backgroundColor:'rgba(212,197,169,0.25)', borderColor:accent, borderWidth:1, borderRadius:3 },
+            { label:'Unique', data:@json($monthUnique), backgroundColor:'rgba(212,197,169,0.08)', borderColor:'rgba(212,197,169,0.3)', borderWidth:1, borderRadius:3 }
         ]
     },
-    options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-            x: {},
-            y: { beginAtZero: true, ticks: { precision: 0 } }
-        }
-    }
+    options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,ticks:{precision:0}} } }
 });
 
-// ── Device doughnut ──────────────────────────────────────────────────────────
 new Chart(document.getElementById('deviceChart'), {
     type: 'doughnut',
     data: {
-        labels: ['Desktop', 'Mobile', 'Tablet'],
-        datasets: [{
-            data: [{{ $deviceDesktop }}, {{ $deviceMobile }}, {{ $deviceTablet }}],
-            backgroundColor: [accent, 'rgba(212,197,169,0.45)', 'rgba(212,197,169,0.15)'],
-            borderColor: 'transparent',
-            borderWidth: 0,
-        }]
+        labels: ['Desktop','Mobile','Tablet'],
+        datasets: [{ data:[{{ $deviceDesktop }},{{ $deviceMobile }},{{ $deviceTablet }}], backgroundColor:[accent,'rgba(212,197,169,0.45)','rgba(212,197,169,0.15)'], borderColor:'transparent' }]
     },
-    options: {
-        responsive: true,
-        cutout: '65%',
-        plugins: { legend: { display: false } }
-    }
+    options: { responsive:true, cutout:'65%', plugins:{legend:{display:false}} }
 });
 </script>
 

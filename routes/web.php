@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PortfolioController;
@@ -10,8 +11,8 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\SeoController;         // ← NEW
-use App\Http\Controllers\Admin\AnalyticsController;   // ← NEW
+use App\Http\Controllers\Admin\SeoController;
+use App\Http\Controllers\Admin\AnalyticsController;
 
 // ============================================================
 // PUBLIC ROUTES
@@ -22,6 +23,7 @@ Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio'
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'sendMessage'])->name('contact.send');
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
 
 // SEO
 Route::get('/sitemap.xml', [HomeController::class, 'sitemap'])->name('sitemap');
@@ -39,40 +41,31 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-        // Portfolio
         Route::resource('portfolio', PortfolioController::class)->except(['show']);
-
-        // Services
         Route::resource('services', ServiceController::class)->except(['show']);
-
-        // Testimonials
         Route::resource('testimonials', TestimonialController::class)->except(['show']);
 
-        // Messages
         Route::get('/messages',              [MessageController::class, 'index'])->name('messages.index');
         Route::get('/messages/{message}',    [MessageController::class, 'show'])->name('messages.show');
         Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 
-        // Settings
         Route::get('/settings',  [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
-        // Users
         Route::resource('users', UserController::class)->except(['show']);
         Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 
-        // My Profile & Password
         Route::get('/profile',           [UserController::class, 'profile'])->name('profile');
         Route::post('/profile',          [UserController::class, 'updateProfile'])->name('profile.update');
         Route::post('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
 
-        // ── SEO Settings ─────────────────────────────────────────── NEW ──
         Route::get('/seo',  [SeoController::class, 'index'])->name('seo');
         Route::post('/seo', [SeoController::class, 'update'])->name('seo.update');
 
-        // ── Visitor Analytics ─────────────────────────────────────── NEW ──
-        Route::get('/analytics',  [AnalyticsController::class, 'index'])->name('analytics');
-        Route::post('/analytics/purge', [AnalyticsController::class, 'purge'])->name('analytics.purge');
+        Route::get('/analytics',              [AnalyticsController::class, 'index'])->name('analytics');
+        Route::post('/analytics/purge',       [AnalyticsController::class, 'purge'])->name('analytics.purge');
+        Route::post('/analytics/reset-google',[AnalyticsController::class, 'resetGoogleCounter'])->name('analytics.reset-google');
+
+        Route::post('/reviews/refresh', [ReviewController::class, 'refresh'])->name('reviews.refresh');
     });
 });
