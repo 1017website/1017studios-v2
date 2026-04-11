@@ -83,22 +83,22 @@
                 @endif
 
                 <div class="portfolio-overlay">
-                    <span class="label" style="margin-bottom:.4rem;color:rgba(240,237,232,.5)">{{ $item->category }}</span>
-                    <h4 style="font-family:var(--font-display);font-size:1.4rem;letter-spacing:.05em;margin-bottom:.3rem;color:var(--white)">{{ $item->title }}</h4>
+                    <span class="label">{{ $item->category }}</span>
+                    <h4>{{ $item->title }}</h4>
                     @if ($item->client)
-                        <p style="font-size:.78rem;color:rgba(240,237,232,.45);margin-bottom:.5rem">{{ $item->client }}</p>
+                        <p class="po-client">{{ $item->client }}</p>
                     @endif
 
                     {{-- Action indicator --}}
                     @if ($isWebProject)
-                    <div style="display:inline-flex;align-items:center;gap:5px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);border-bottom:1px solid rgba(240,237,232,.3);padding-bottom:2px;margin-top:.25rem">
+                    <div class="po-action">
                         Buka Website
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     </div>
                     @elseif ($isImagePreview)
-                    <div style="display:inline-flex;align-items:center;gap:5px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);border-bottom:1px solid rgba(240,237,232,.3);padding-bottom:2px;margin-top:.25rem">
+                    <div class="po-action">
                         Preview
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     </div>
                     @endif
                 </div>
