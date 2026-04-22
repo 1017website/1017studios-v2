@@ -8,22 +8,20 @@ use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__ . '/../routes/web.php',
-        commands: __DIR__ . '/../routes/console.php',
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Register TrackVisitor middleware for all web routes
+        // Register TrackVisitor middleware
         $middleware->web(append: [
             \App\Http\Middleware\TrackVisitor::class,
         ]);
+
+        // Override redirect saat session habis/unauthenticated → admin.login
+        // Method redirectGuestsTo adalah cara resmi Laravel 12
+        $middleware->redirectGuestsTo(fn () => route('admin.login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        // Redirect unauthenticated users to admin.login instead of default 'login'
-        $exceptions->render(function (AuthenticationException $e, Request $request) {
-            if ($request->is('admin/*') || $request->is('admin')) {
-                return redirect()->route('admin.login')
-                    ->with('error', 'Sesi Anda telah berakhir. Silakan login kembali.');
-            }
-        });
+        //
     })->create();
