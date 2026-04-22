@@ -96,6 +96,35 @@
         </div>
     </div>
 
+    {{-- Google Tag Manager --}}
+    <div class="admin-section-card">
+        <div class="admin-section-card-title">Google Tag Manager</div>
+        <div class="admin-form">
+            <div class="form-group">
+                <label class="form-label">GTM Container ID</label>
+                <input type="text" name="gtm_id" class="form-input"
+                    value="{{ old('gtm_id', $settings['gtm_id'] ?? '') }}"
+                    placeholder="GTM-XXXXXXX"
+                    style="font-family:monospace;letter-spacing:.05em">
+                <small style="color:rgba(255,255,255,.3);font-size:.72rem">
+                    Format: GTM-XXXXXXX &mdash; Kosongkan jika tidak ingin menggunakan GTM.
+                    Script akan otomatis diinjeksi ke &lt;head&gt; dan &lt;body&gt; di semua halaman publik.
+                </small>
+            </div>
+            @if(!empty($settings['gtm_id']))
+            <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(100,220,100,.7);margin-top:.25rem">
+                <span style="width:6px;height:6px;border-radius:50%;background:rgba(100,220,100,.7);display:inline-block"></span>
+                GTM aktif: <code style="font-size:.75rem;background:rgba(255,255,255,.06);padding:2px 8px;letter-spacing:.05em">{{ $settings['gtm_id'] }}</code>
+            </div>
+            @else
+            <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(255,255,255,.25);margin-top:.25rem">
+                <span style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);display:inline-block"></span>
+                GTM belum dikonfigurasi
+            </div>
+            @endif
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-dark" style="padding:18px 48px">
         <span>Save Settings</span>
     </button>

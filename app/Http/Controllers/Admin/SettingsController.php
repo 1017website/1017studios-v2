@@ -22,7 +22,17 @@ class SettingsController extends Controller
             'company_name', 'tagline', 'email', 'whatsapp', 'address', 'maps_url',
             'stat_projects', 'stat_clients', 'stat_years', 'stat_satisfaction',
             'instagram', 'linkedin', 'meta_description',
+            'gtm_id', // ← Google Tag Manager
         ];
+
+        // Validate GTM ID format if provided
+        if ($request->filled('gtm_id')) {
+            $request->validate([
+                'gtm_id' => ['nullable', 'regex:/^GTM-[A-Z0-9]+$/'],
+            ], [
+                'gtm_id.regex' => 'Format GTM ID tidak valid. Contoh yang benar: GTM-XXXXXXX',
+            ]);
+        }
 
         foreach ($keys as $key) {
             Setting::updateOrCreate(

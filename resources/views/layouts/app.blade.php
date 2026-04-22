@@ -19,6 +19,15 @@
         gtag('config', 'AW-18088216216');
     </script>
 
+    {{-- ── Google Tag Manager (dari CMS Settings) ─────────────── --}}
+    @if(!empty($settings['gtm_id']))
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ $settings['gtm_id'] }}');</script>
+    @endif
+
     @php
     // ── SEO variables ──────────────────────────────────────────
     $seoTitle = $seo['title'] ?? ($title ?? '1017Studios') . ' | Branding & Digital Agency';
@@ -210,6 +219,12 @@
 </head>
 
 <body>
+
+    {{-- ── Google Tag Manager (noscript) — tepat setelah <body> ── --}}
+    @if(!empty($settings['gtm_id']))
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $settings['gtm_id'] }}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    @endif
 
     <div class="cursor" id="cursor"></div>
     <div class="cursor-follower" id="cursorFollower"></div>
