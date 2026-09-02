@@ -161,6 +161,19 @@ Logo ditampilkan putih (`filter: brightness(0) invert(1)`) — pastikan logo pun
 ### Ubah statistik homepage
 Masuk ke **Admin → Settings** → bagian Statistics
 
+### Our Client (homepage)
+Section **Our Client** berada di atas **Our Services**, setelah marquee. Nama klien diambil dari field **Client** pada portfolio aktif dan **Company** pada testimonial aktif, termasuk portfolio yang tidak featured. Nama kosong diabaikan dan nama yang sama ditampilkan sekali (tanpa membedakan huruf besar/kecil).
+
+Kelola nama melalui **Admin → Portfolio** atau **Admin → Testimonials**. Section memakai tampilan teks karena belum tersedia aset logo klien. Jika belum ada nama klien, section menampilkan ajakan kolaborasi dan tautan kontak tanpa nama contoh.
+
+### Pemeliharaan dari CMS
+Masuk ke **Admin → Settings → System Maintenance**. Simpan perubahan Settings terlebih dahulu. Masukkan password akun CMS dan centang konfirmasi pada tindakan yang dipilih:
+
+- **Migrate** menjalankan `migrate --force --no-interaction` untuk migrasi yang belum diterapkan. Siapkan backup database; tidak ada tindakan fresh, refresh, rollback, atau seeding.
+- **Optimize Clear** menjalankan `optimize:clear --no-interaction`, termasuk pembersihan cache aplikasi.
+
+Keduanya memakai POST, CSRF, autentikasi CMS, verifikasi password, dan pembatasan request. Semua akun CMS memiliki akses sesuai model akses admin yang sudah ada. Hasil ditampilkan sebagai notifikasi; perintah dan status dicatat pada log server, tanpa menampilkan detail error internal kepada pengguna. File lock mencegah eksekusi bersamaan pada server yang sama dan tidak ikut terhapus oleh Optimize Clear. Untuk deployment multi-server, gunakan koordinasi pemeliharaan terpusat. Folder `storage/framework` harus writable.
+
 ---
 
 ## 🗄️ Database Tables

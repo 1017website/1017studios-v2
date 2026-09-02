@@ -189,6 +189,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4500);
     });
 
+    // Prevent accidental repeat submissions of CMS maintenance actions.
+    const maintenanceForms = document.querySelectorAll('[data-maintenance-form]');
+    let maintenancePending = false;
+    maintenanceForms.forEach(form => {
+        form.addEventListener('submit', event => {
+            if (maintenancePending) {
+                event.preventDefault();
+                return;
+            }
+            maintenancePending = true;
+            form.setAttribute('aria-busy', 'true');
+            maintenanceForms.forEach(item => {
+                item.querySelector('button[type="submit"]').disabled = true;
+            });
+            const status = document.querySelector('[data-maintenance-status]');
+            if (status) status.hidden = false;
+        });
+    });
+    window.addEventListener('pageshow', () => {
+        maintenancePending = false;
+        maintenanceForms.forEach(form => {
+            form.removeAttribute('aria-busy');
+            form.querySelector('button[type="submit"]').disabled = false;
+        });
+        const status = document.querySelector('[data-maintenance-status]');
+        if (status) status.hidden = true;
+    });
+
     // ================================================
     // IMAGE FILE PREVIEW (admin uploads)
     // ================================================

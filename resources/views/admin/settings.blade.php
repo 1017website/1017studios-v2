@@ -130,4 +130,6 @@
     </button>
 </form>
 
+@include('admin.partials.maintenance')
+
 @endsection

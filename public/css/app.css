@@ -421,6 +421,34 @@ a  { text-decoration: none; color: inherit; }
 .portfolio-placeholder { background: var(--bg-3); display: flex; align-items: center; justify-content: center; }
 
 /* ================================================
+   OUR CLIENT
+   ================================================ */
+.clients-section { border-top: 1px solid var(--border); scroll-margin-top: var(--nav-h); }
+.clients-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 6rem); align-items: end;
+}
+.clients-header h2 em { font-family: var(--font-serif); font-style: italic; color: var(--accent); }
+.clients-intro { max-width: 460px; justify-self: end; }
+.clients-intro p { margin-bottom: 1.5rem; }
+.clients-intro .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.clients-grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px; list-style: none; margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding: 1px; background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.client-card {
+    display: flex; align-items: center; justify-content: center;
+    min-width: 0; min-height: 150px; padding: 2rem 1.5rem;
+    background: var(--bg-card); text-align: center;
+}
+.client-name {
+    font-family: var(--font-display); font-size: clamp(1.4rem, 2.4vw, 2rem);
+    letter-spacing: 0.04em; line-height: 1.2; color: var(--off-white);
+    overflow-wrap: anywhere;
+}
+
+/* ================================================
    STATS (light bg)
    ================================================ */
 .stats-section { background: var(--off-white); color: #1c1c1c; }
@@ -597,6 +625,23 @@ tbody tr:last-child td { border-bottom: none; }
     border: 1px solid var(--border); color: rgba(240,237,232,0.5);
     transition: all 0.18s; cursor: none; background: none; border-radius: 1px; font-family: var(--font-body);
 }
+
+.maintenance-section { margin-top: 3rem; }
+.maintenance-description { max-width: 760px; margin-bottom: 1.5rem; }
+.maintenance-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.maintenance-form { display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; border: 1px solid var(--border); padding: 1.5rem; }
+.maintenance-form h3 { font-family: var(--font-display); font-style: normal; letter-spacing: .04em; }
+.maintenance-form p, .maintenance-confirm { font-size: .85rem; }
+.maintenance-form .maintenance-warning { color: var(--accent); }
+.maintenance-form .form-group { margin-top: auto; }
+.maintenance-form .btn { align-self: flex-start; }
+.maintenance-confirm { display: flex; align-items: flex-start; gap: .7rem; color: var(--off-white); }
+.maintenance-confirm input { flex-shrink: 0; margin-top: .3rem; accent-color: var(--accent); }
+.maintenance-form :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.maintenance-form .btn:disabled { opacity: .45; pointer-events: none; }
+.maintenance-errors { border: 1px solid rgba(255,120,120,.4); padding: 1rem 1.5rem; margin-bottom: 1.5rem; color: #ffaaaa; }
+.maintenance-errors ul { padding-left: 1rem; }
+.maintenance-status { margin-top: 1.5rem; color: var(--accent); }
 .action-btn:hover { border-color: var(--border-hover); color: var(--white); background: rgba(255,255,255,0.04); }
 .action-btn.danger { border-color: rgba(220,80,80,0.18); color: rgba(220,110,110,0.6); }
 .action-btn.danger:hover { border-color: rgba(220,80,80,0.45); color: rgb(230,100,100); background: rgba(220,80,80,0.05); }
@@ -620,6 +665,7 @@ tbody tr:last-child td { border-bottom: none; }
    RESPONSIVE
    ================================================ */
 @media (max-width: 1024px) {
+    .clients-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .services-grid { grid-template-columns: 1fr; }
     .service-card  { border-right: none; }
     .service-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
@@ -633,6 +679,11 @@ tbody tr:last-child td { border-bottom: none; }
 }
 
 @media (max-width: 768px) {
+    .maintenance-grid { grid-template-columns: 1fr; }
+    .clients-header { grid-template-columns: 1fr; }
+    .clients-intro { justify-self: start; }
+    .clients-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .client-card { min-height: 120px; padding: 1.5rem 1rem; }
     :root { --nav-h: 62px; }
     .nav-links    { display: none; }
     .nav-hamburger { display: flex; }

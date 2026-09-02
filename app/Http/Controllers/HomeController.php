@@ -22,6 +22,14 @@ class HomeController extends Controller
         $services     = Service::where('is_active', true)->orderBy('order')->get();
         $portfolios   = Portfolio::where('is_active', true)->where('is_featured', true)->orderBy('order')->take(5)->get();
         $testimonials = Testimonial::where('is_active', true)->orderBy('order')->get();
+        // Include all published projects, not just the five featured above.
+        $clients = Portfolio::where('is_active', true)
+            ->orderBy('order')->orderBy('id')->pluck('client')
+            ->concat($testimonials->pluck('company'))
+            ->map(fn ($name) => trim((string) $name))
+            ->filter(fn ($name) => $name !== '')
+            ->unique(fn ($name) => mb_strtolower($name))
+            ->values();
         $stats = [
             'projects'     => $settings['stat_projects']     ?? 150,
             'clients'      => $settings['stat_clients']      ?? 80,
@@ -36,7 +44,7 @@ class HomeController extends Controller
             'type'        => 'website',
         ];
 
-        return view('home.index', compact('settings', 'services', 'portfolios', 'testimonials', 'stats', 'seo'));
+        return view('home.index', compact('settings', 'services', 'portfolios', 'testimonials', 'clients', 'stats', 'seo'));
     }
 
     public function services()

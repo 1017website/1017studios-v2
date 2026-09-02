@@ -58,6 +58,8 @@
     </div>
 </div>
 
+@include('home.partials.clients')
+
 <!-- ===== SERVICES PREVIEW ===== -->
 <section class="section" id="services">
     <div class="container">

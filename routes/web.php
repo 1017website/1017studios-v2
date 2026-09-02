@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\MaintenanceController;
 
 // ============================================================
 // PUBLIC ROUTES
@@ -51,6 +52,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/settings',  [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
+        Route::post('/settings/maintenance/migrate', [MaintenanceController::class, 'migrate'])
+            ->middleware('throttle:3,1')->name('maintenance.migrate');
+        Route::post('/settings/maintenance/optimize-clear', [MaintenanceController::class, 'optimizeClear'])
+            ->middleware('throttle:3,1')->name('maintenance.optimize-clear');
 
         Route::resource('users', UserController::class)->except(['show']);
         Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
