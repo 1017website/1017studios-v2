@@ -163,13 +163,13 @@ Logo ditampilkan putih (`filter: brightness(0) invert(1)`) — pastikan logo pun
 Masuk ke **Admin → Settings** → bagian Statistics
 
 ### Our Client (homepage)
-Section **Klien dan Mitra Kami** berada di atas **Our Services**, setelah marquee layanan. Kelola datanya melalui menu khusus **Admin → Our Client** (`/admin/clients`), di sidebar antara Portfolio dan Services. Data tidak lagi diambil dari Portfolio atau Testimonials.
+Section **Our Client** berada di atas **Our Services**, setelah marquee layanan. Judul, tata letak, warna, dan jaraknya mengikuti tema warm dark serta kombinasi tipografi tegak/serif miring pada Our Services. Kelola datanya melalui menu khusus **Admin → Our Client** (`/admin/clients`), di sidebar antara Portfolio dan Services. Data tidak lagi diambil dari Portfolio atau Testimonials.
 
 1. Setelah memperbarui kode, siapkan backup lalu jalankan **Settings → System Maintenance → Migrate** untuk membuat tabel `clients`.
 2. Buka **Our Client → Tambah Klien**, isi nama, unggah logo PNG/JPG/WebP (maksimal 2 MB, 4000 × 4000 px), atur urutan, lalu simpan. Hanya data Aktif yang tampil.
 3. Gunakan **Edit** untuk mengganti logo, urutan, atau mengubah status menjadi Draft. **Hapus** menghapus data dan file logo; gunakan Draft untuk menyembunyikan tanpa menghapus.
 
-Logo tampil berwarna pada dua baris terang yang bergerak berlawanan arah, berhenti saat hover/fokus, dan bisa dijeda lewat tombol. Preferensi reduced motion serta browser tanpa JavaScript menampilkan grid statis. Jika kosong atau migrasi belum dijalankan, homepage tetap tersedia tanpa logo contoh. Logo pada gambar referensi tidak otomatis dianggap sebagai klien.
+Logo tampil berwarna pada dua baris kartu gelap dengan alas logo off-white, sejajar dengan container konten website. Kedua baris bergerak berlawanan arah, berhenti saat hover/fokus, dan bisa dijeda lewat tombol. Preferensi reduced motion serta browser tanpa JavaScript menampilkan grid statis. Jika kosong atau migrasi belum dijalankan, homepage tetap tersedia tanpa logo contoh. Logo pada gambar referensi tidak otomatis dianggap sebagai klien.
 
 Penyimpanan logo mengikuti upload lain di proyek: `storage/app/public/clients`. Pastikan symlink `public/storage` tersedia (`php artisan storage:link` sekali saat setup). Tes animasi tanpa dependensi: `node --test tests/clients-marquee.test.mjs`. Tes Laravel: `php artisan test --filter=ClientsTest`.
 

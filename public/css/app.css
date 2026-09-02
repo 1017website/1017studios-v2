@@ -424,38 +424,38 @@ a  { text-decoration: none; color: inherit; }
    OUR CLIENT
    ================================================ */
 .clients-section {
-    padding: clamp(3rem, 6vw, 6rem) 0 3.5rem; scroll-margin-top: var(--nav-h);
-    background: radial-gradient(ellipse at 0 0, rgba(0, 80, 48, .15), transparent 55%),
-                radial-gradient(ellipse at 100% 0, rgba(150, 0, 20, .14), transparent 55%), #0b0b0c;
+    /* The following Services section supplies the shared inter-section gap. */
+    padding-bottom: 0; scroll-margin-top: var(--nav-h);
 }
-.clients-header {
-    display: grid; grid-template-columns: 1.7fr 1fr;
-    gap: clamp(2rem, 4vw, 4rem); align-items: center; margin-bottom: 2.5rem;
+.clients-header { margin-bottom: 0; }
+.clients-heading { min-width: 0; }
+.clients-heading em { font-family: var(--font-serif); font-style: italic; }
+.clients-intro p { margin-bottom: 1.5rem; }
+.clients-toggle {
+    font: inherit; font-size: .75rem; color: var(--white); letter-spacing: .14em;
+    text-transform: uppercase; background: none; border: 0;
+    border-bottom: 1px solid var(--border-hover); padding: .5rem 0; cursor: pointer;
 }
-.clients-heading { border-left: 7px solid #ed1428; padding-left: clamp(1rem, 2vw, 2rem); min-width: 0; }
-.clients-heading .label { color: #ff4557; font-weight: 600; margin-bottom: 1rem; }
-.clients-heading h2 { font-size: clamp(2.6rem, 5.1vw, 5.7rem); line-height: .98; color: #fff; }
-.clients-intro { max-width: 440px; justify-self: end; }
-.clients-intro p { font-size: .95rem; line-height: 1.8; color: rgba(255,255,255,.7); }
-.clients-toggle, .clients-contact {
-    font: inherit; font-size: .75rem; color: var(--white); letter-spacing: .04em;
-    background: none; border: 0; border-bottom: 1px solid rgba(255,255,255,.35);
-    padding: .35rem 0; margin-top: .8rem; cursor: pointer;
-}
+.clients-toggle:hover { color: var(--accent); border-color: var(--accent); }
 .clients-section :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.clients-viewport { background: #f4f5f6; }
+.clients-logos { margin-top: clamp(2.5rem, 5vw, 5rem); }
+.clients-viewport { background: var(--bg-card); border: 1px solid var(--border); }
 .clients-viewport:focus-visible { outline-offset: -4px; }
 .clients-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); list-style: none; }
 .clients-row--reverse, .clients-group--copy, .client-logo--repeat { display: none; }
 .client-logo {
     align-items: center; justify-content: center; height: 124px;
     padding: 1.4rem 1.7rem; min-width: 0;
-    border-right: 1px solid #dedfe1; border-bottom: 1px solid #dedfe1;
-    background: linear-gradient(#fff, #f1f2f4); text-align: center;
+    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    text-align: center;
 }
 .client-logo:not(.client-logo--repeat) { display: flex; }
-.client-logo img { width: 100%; height: 100%; max-width: 180px; max-height: 78px; object-fit: contain; }
-.client-logo-fallback { font-family: var(--font-display); font-size: 1.6rem; color: #222; overflow-wrap: anywhere; }
+.client-logo img {
+    width: 100%; height: 100%; max-width: 180px; max-height: 78px; object-fit: contain;
+    /* A neutral backplate keeps dark and transparent uploads legible without recoloring logos. */
+    padding: .65rem; background: var(--off-white);
+}
+.client-logo-fallback { font-family: var(--font-display); font-size: 1.6rem; color: var(--white); overflow-wrap: anywhere; }
 @keyframes clients-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: no-preference) {
     .clients-animated .clients-viewport {
@@ -463,7 +463,7 @@ a  { text-decoration: none; color: inherit; }
         -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
         mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
     }
-    .clients-animated .clients-row--reverse { display: block; border-top: 2px solid #d7cbcd; }
+    .clients-animated .clients-row--reverse { display: block; }
     .clients-animated .clients-track { display: flex; width: max-content; animation: clients-scroll var(--clients-duration, 32s) linear infinite; }
     .clients-animated .clients-row--reverse .clients-track { animation-direction: reverse; }
     .clients-animated .clients-group { display: flex; flex: 0 0 auto; min-width: 100vw; }
@@ -490,10 +490,6 @@ a  { text-decoration: none; color: inherit; }
 .client-admin-help { font-size: .75rem; margin-top: .65rem; }
 .client-admin-errors { padding: 1rem 2rem; border: 1px solid #c55; color: #ffaaaa; margin-bottom: 1.5rem; }
 .client-admin-form :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-@media (max-width: 900px) {
-    .clients-header { grid-template-columns: 1fr; gap: 1.5rem; }
-    .clients-intro { justify-self: start; max-width: 600px; }
-}
 
 /* ================================================
    STATS (light bg)

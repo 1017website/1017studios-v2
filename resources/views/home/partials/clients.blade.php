@@ -1,17 +1,20 @@
 <!-- ===== OUR CLIENT ===== -->
-<section class="clients-section" id="clients" aria-labelledby="clients-title" data-client-marquee>
+<section class="section clients-section" id="clients" aria-labelledby="clients-title" data-client-marquee>
     <div class="container">
-        <div class="clients-header">
+        <div class="services-header clients-header">
             <div class="clients-heading">
-                <span class="label">Client & Partner</span>
-                <h2 id="clients-title">Klien dan Mitra Kami</h2>
+                <span class="label">Clients & Partners</span>
+                <h2 id="clients-title">Our<br><em>Client</em></h2>
             </div>
             <div class="clients-intro">
-                <p>{{ $clients->isNotEmpty() ? 'Bersama klien dan mitra, kami menghadirkan ide menjadi identitas, karya, dan pengalaman digital yang bermakna.' : 'Setiap kolaborasi dimulai dari percakapan. Mari wujudkan ide dan langkah berikutnya untuk brand Anda.' }}</p>
+                <p>{{ $clients->isNotEmpty() ? 'The brands and businesses we collaborate with, bringing ideas to life through thoughtful design and digital experiences.' : 'Every great collaboration starts with a conversation. Let us bring your next idea to life.' }}</p>
                 @if ($clients->isNotEmpty())
                 <button type="button" class="clients-toggle" data-client-toggle aria-controls="clients-logos" aria-pressed="false" hidden>Jeda animasi</button>
                 @else
-                <a href="{{ route('contact') }}" class="clients-contact">Mulai Kolaborasi →</a>
+                <a href="{{ route('contact') }}" class="btn">
+                    <span>Work With Us</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
                 @endif
             </div>
         </div>
@@ -19,6 +22,7 @@
 
     @if ($clients->isNotEmpty())
     @php($repetitions = max(1, (int) ceil(8 / $clients->count())))
+    <div class="container clients-logos">
     <div class="clients-viewport" id="clients-logos" tabindex="0" role="region" aria-label="Logo klien dan mitra; animasi berhenti saat area ini difokuskan">
         @foreach ([false, true] as $reverse)
         <div class="clients-row {{ $reverse ? 'clients-row--reverse' : '' }}" @if ($reverse) aria-hidden="true" @endif>
@@ -38,6 +42,7 @@
             </div>
         </div>
         @endforeach
+    </div>
     </div>
     <script type="module" src="{{ asset('js/clients.js') }}"></script>
     @endif

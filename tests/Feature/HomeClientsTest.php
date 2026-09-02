@@ -48,7 +48,8 @@ class HomeClientsTest extends TestCase
             ]),
         ])
             ->assertSee('id="clients-title"', false)
-            ->assertSee('Klien dan Mitra Kami')
+            ->assertSee('Our<br><em>Client</em>', false)
+            ->assertSee('services-header clients-header')
             ->assertSee('Studio Alpha')
             ->assertSee('storage/clients/alpha.png')
             ->assertSee('clients-row--reverse')
@@ -63,8 +64,8 @@ class HomeClientsTest extends TestCase
     {
         $this->view('home.partials.clients', ['clients' => collect()])
             ->assertSee('id="clients"', false)
-            ->assertSee('Setiap kolaborasi dimulai dari percakapan.')
-            ->assertSee('Mulai Kolaborasi')
+            ->assertSee('Every great collaboration starts with a conversation.')
+            ->assertSee('Work With Us')
             ->assertSee('href="'.route('contact').'"', false)
             ->assertDontSee('id="clients-logos"', false);
     }
