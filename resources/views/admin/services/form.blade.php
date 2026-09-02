@@ -20,20 +20,20 @@
             <div class="form-group">
                 <label class="form-label">Title *</label>
                 <input type="text" name="title" class="form-input" value="{{ old('title', $service->title ?? '') }}" required>
-                @error('title')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                @error('title')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
-                <label class="form-label">Short Description * <span style="color:rgba(255,255,255,.3)">(shown on cards, max 400 chars)</span></label>
+                <label class="form-label">Short Description * <span style="color:var(--cms-muted)">(shown on cards, max 400 chars)</span></label>
                 <textarea name="short_description" class="form-textarea" rows="3" required maxlength="400">{{ old('short_description', $service->short_description ?? '') }}</textarea>
-                @error('short_description')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                @error('short_description')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
-                <label class="form-label">Full Description <span style="color:rgba(255,255,255,.3)">(optional, shown on services page)</span></label>
+                <label class="form-label">Full Description <span style="color:var(--cms-muted)">(optional, shown on services page)</span></label>
                 <textarea name="full_description" class="form-textarea" rows="5">{{ old('full_description', $service->full_description ?? '') }}</textarea>
             </div>
             <div class="admin-form-row">
                 <div class="form-group">
-                    <label class="form-label">Tags <span style="color:rgba(255,255,255,.3)">(comma separated)</span></label>
+                    <label class="form-label">Tags <span style="color:var(--cms-muted)">(comma separated)</span></label>
                     <input type="text" name="tags" class="form-input" value="{{ old('tags', $service->tags ?? '') }}" placeholder="Logo Design, Branding, Identity">
                 </div>
                 <div class="form-group">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="form-label">Icon SVG <span style="color:rgba(255,255,255,.3)">(paste raw SVG code)</span></label>
+                <label class="form-label">Icon SVG <span style="color:var(--cms-muted)">(paste raw SVG code)</span></label>
                 <textarea name="icon_svg" class="form-textarea" rows="4" placeholder="<svg ...>...</svg>">{{ old('icon_svg', $service->icon_svg ?? '') }}</textarea>
             </div>
             <div class="form-group">

@@ -22,14 +22,14 @@
                     <label class="form-label">Nama Lengkap *</label>
                     <input type="text" name="name" class="form-input"
                            value="{{ old('name', $user->name ?? '') }}" required autofocus>
-                    @error('name')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                    @error('name')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Email *</label>
                     <input type="email" name="email" class="form-input"
                            value="{{ old('email', $user->email ?? '') }}" required>
-                    @error('email')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                    @error('email')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                 </div>
 
                 @if(!isset($user))
@@ -38,7 +38,7 @@
                     <label class="form-label">Password *</label>
                     <input type="password" name="password" class="form-input"
                            placeholder="Min. 8 karakter" required autocomplete="new-password">
-                    @error('password')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                    @error('password')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
@@ -47,7 +47,7 @@
                            placeholder="Ulangi password" required autocomplete="new-password">
                 </div>
                 @else
-                <div style="padding:.75rem 1rem;background:rgba(212,197,169,.06);border:1px solid rgba(212,197,169,.15);border-radius:2px;font-size:.82rem;color:rgba(240,237,232,.5)">
+                <div style="padding:.75rem 1rem;background:rgba(212,197,169,.06);border:1px solid var(--cms-accent-border);border-radius:2px;font-size:.82rem;color:var(--cms-muted)">
                     💡 Untuk mereset password user ini, gunakan tombol <strong style="color:var(--accent)">Reset PW</strong> di halaman daftar user.
                 </div>
                 @endif

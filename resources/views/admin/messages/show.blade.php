@@ -13,7 +13,7 @@
 <div style="display:grid;grid-template-columns:1fr 280px;gap:1.5rem;max-width:900px">
     <div class="admin-section-card">
         <div class="admin-section-card-title">Message</div>
-        <p style="font-size:1rem;line-height:1.8;color:rgba(255,255,255,.8)">{{ $message->message }}</p>
+        <p style="font-size:1rem;line-height:1.8;color:var(--cms-secondary)">{{ $message->message }}</p>
     </div>
 
     <div>
@@ -26,12 +26,12 @@
                 </div>
                 <div>
                     <div class="form-label" style="margin-bottom:4px">Email</div>
-                    <a href="mailto:{{ $message->email }}" style="font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.15)">{{ $message->email }}</a>
+                    <a href="mailto:{{ $message->email }}" style="font-size:.9rem;border-bottom:1px solid var(--cms-border)">{{ $message->email }}</a>
                 </div>
                 @if($message->phone)
                 <div>
                     <div class="form-label" style="margin-bottom:4px">Phone / WhatsApp</div>
-                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $message->phone) }}" target="_blank" style="font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.15)">{{ $message->phone }}</a>
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $message->phone) }}" target="_blank" style="font-size:.9rem;border-bottom:1px solid var(--cms-border)">{{ $message->phone }}</a>
                 </div>
                 @endif
                 @if($message->service)
@@ -42,7 +42,7 @@
                 @endif
                 <div>
                     <div class="form-label" style="margin-bottom:4px">Received</div>
-                    <div style="font-size:.9rem;color:rgba(255,255,255,.5)">{{ $message->created_at->format('d M Y, H:i') }}</div>
+                    <div style="font-size:.9rem;color:var(--cms-muted)">{{ $message->created_at->format('d M Y, H:i') }}</div>
                 </div>
             </div>
         </div>

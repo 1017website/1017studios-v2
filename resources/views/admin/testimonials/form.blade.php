@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="form-label">Client Name *</label>
                         <input type="text" name="name" class="form-input" value="{{ old('name', $testimonial->name ?? '') }}" required>
-                        @error('name')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                        @error('name')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
                         <label class="form-label">Role / Position</label>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="form-label">Quote / Review *</label>
                     <textarea name="quote" class="form-textarea" rows="5" required maxlength="600">{{ old('quote', $testimonial->quote ?? '') }}</textarea>
-                    @error('quote')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                    @error('quote')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label class="form-label">Display Order</label>
@@ -63,7 +63,7 @@
                     @endif
                 </div>
                 <input type="file" name="avatar" class="form-input" accept="image/*" data-preview="avatar-preview" style="padding:10px;font-size:.8rem">
-                <p style="font-size:.72rem;margin-top:.5rem;color:rgba(255,255,255,.3)">Square image recommended. Max 1MB.</p>
+                <p style="font-size:.72rem;margin-top:.5rem;color:var(--cms-muted)">Square image recommended. Max 1MB.</p>
             </div>
 
             <button type="submit" class="btn btn-dark" style="width:100%;justify-content:center">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="cms-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,15 +31,16 @@
         .cursor.hover { width: 18px; height: 18px; }
         .cursor-follower {
             width: 40px; height: 40px;
-            border: 1.5px solid rgba(240,237,232,0.28);
+            border: 1.5px solid var(--cms-border);
             border-radius: 50%; position: fixed; top: 0; left: 0;
             pointer-events: none; z-index: 999998;
             transform: translate(-50%,-50%); will-change: left, top;
             transition: width .28s var(--ease), height .28s var(--ease), border-color .28s;
         }
-        .cursor-follower.hover { width: 64px; height: 64px; border-color: rgba(240,237,232,0.5); }
+        .cursor-follower.hover { width: 64px; height: 64px; border-color: var(--cms-border-strong); }
         @media (max-width: 768px) { body { cursor: auto; } .cursor, .cursor-follower { display: none !important; } }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ filemtime(public_path('css/admin.css')) }}">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -62,6 +63,10 @@
             <a href="{{ route('admin.portfolio.index') }}" class="admin-nav-item {{ request()->routeIs('admin.portfolio.*') ? 'active' : '' }}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/></svg>
                 Portfolio
+            </a>
+            <a href="{{ route('admin.clients.index') }}" class="admin-nav-item {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Our Client
             </a>
             <a href="{{ route('admin.services.index') }}" class="admin-nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M21 12h-2M19.07 19.07l-1.41-1.41M12 21v-2M4.93 19.07l1.41-1.41M3 12h2M4.93 4.93l1.41 1.41"/></svg>
@@ -132,8 +137,8 @@
                 {{ $pageTitle ?? 'Dashboard' }}
             </div>
             <div style="display:flex;align-items:center;gap:1rem">
-                <span style="font-size:.8rem;color:rgba(255,255,255,.5)">{{ Auth::user()->name ?? 'Admin' }}</span>
-                <div style="width:34px;height:34px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.9rem">
+                <span style="font-size:.8rem;color:var(--cms-muted)">{{ Auth::user()->name ?? 'Admin' }}</span>
+                <div style="width:34px;height:34px;border:1px solid var(--cms-border);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.9rem">
                     {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
                 </div>
             </div>
@@ -141,12 +146,12 @@
 
         <div class="admin-content">
             @if (session('success'))
-                <div class="flash-message" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:1rem 1.5rem;margin-bottom:1.5rem;font-size:.88rem;display:flex;justify-content:space-between;transition:opacity .4s">
+                <div class="flash-message" style="background:rgba(255,255,255,.06);border:1px solid var(--cms-border);padding:1rem 1.5rem;margin-bottom:1.5rem;font-size:.88rem;display:flex;justify-content:space-between;transition:opacity .4s">
                     <span>✓ &nbsp;{{ session('success') }}</span>
                 </div>
             @endif
             @if (session('error'))
-                <div class="flash-message" style="background:rgba(255,80,80,.06);border:1px solid rgba(255,80,80,.2);padding:1rem 1.5rem;margin-bottom:1.5rem;font-size:.88rem;color:rgba(255,120,120,.9);transition:opacity .4s">
+                <div class="flash-message" style="background:rgba(255,80,80,.06);border:1px solid var(--cms-danger-border);padding:1rem 1.5rem;margin-bottom:1.5rem;font-size:.88rem;color:var(--cms-danger);transition:opacity .4s">
                     ✕ &nbsp;{{ session('error') }}\n                </div>
             @endif
 

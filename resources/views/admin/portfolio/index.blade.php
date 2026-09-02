@@ -50,7 +50,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" style="color:var(--mid-gray);text-align:center;padding:3rem">No portfolio items yet. <a href="{{ route('admin.portfolio.create') }}" style="color:var(--white);border-bottom:1px solid rgba(255,255,255,.3)">Add one now.</a></td></tr>
+            <tr><td colspan="6" style="color:var(--mid-gray);text-align:center;padding:3rem">No portfolio items yet. <a href="{{ route('admin.portfolio.create') }}" style="color:var(--white);border-bottom:1px solid var(--cms-border)">Add one now.</a></td></tr>
             @endforelse
         </tbody>
     </table>

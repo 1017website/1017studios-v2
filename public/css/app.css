@@ -423,29 +423,76 @@ a  { text-decoration: none; color: inherit; }
 /* ================================================
    OUR CLIENT
    ================================================ */
-.clients-section { border-top: 1px solid var(--border); scroll-margin-top: var(--nav-h); }
+.clients-section {
+    padding: clamp(3rem, 6vw, 6rem) 0 3.5rem; scroll-margin-top: var(--nav-h);
+    background: radial-gradient(ellipse at 0 0, rgba(0, 80, 48, .15), transparent 55%),
+                radial-gradient(ellipse at 100% 0, rgba(150, 0, 20, .14), transparent 55%), #0b0b0c;
+}
 .clients-header {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 6vw, 6rem); align-items: end;
+    display: grid; grid-template-columns: 1.7fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem); align-items: center; margin-bottom: 2.5rem;
 }
-.clients-header h2 em { font-family: var(--font-serif); font-style: italic; color: var(--accent); }
-.clients-intro { max-width: 460px; justify-self: end; }
-.clients-intro p { margin-bottom: 1.5rem; }
-.clients-intro .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-.clients-grid {
-    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px; list-style: none; margin-top: clamp(2.5rem, 5vw, 4rem);
-    padding: 1px; background: var(--border); border-radius: 2px; overflow: hidden;
+.clients-heading { border-left: 7px solid #ed1428; padding-left: clamp(1rem, 2vw, 2rem); min-width: 0; }
+.clients-heading .label { color: #ff4557; font-weight: 600; margin-bottom: 1rem; }
+.clients-heading h2 { font-size: clamp(2.6rem, 5.1vw, 5.7rem); line-height: .98; color: #fff; }
+.clients-intro { max-width: 440px; justify-self: end; }
+.clients-intro p { font-size: .95rem; line-height: 1.8; color: rgba(255,255,255,.7); }
+.clients-toggle, .clients-contact {
+    font: inherit; font-size: .75rem; color: var(--white); letter-spacing: .04em;
+    background: none; border: 0; border-bottom: 1px solid rgba(255,255,255,.35);
+    padding: .35rem 0; margin-top: .8rem; cursor: pointer;
 }
-.client-card {
-    display: flex; align-items: center; justify-content: center;
-    min-width: 0; min-height: 150px; padding: 2rem 1.5rem;
-    background: var(--bg-card); text-align: center;
+.clients-section :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.clients-viewport { background: #f4f5f6; }
+.clients-viewport:focus-visible { outline-offset: -4px; }
+.clients-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); list-style: none; }
+.clients-row--reverse, .clients-group--copy, .client-logo--repeat { display: none; }
+.client-logo {
+    align-items: center; justify-content: center; height: 124px;
+    padding: 1.4rem 1.7rem; min-width: 0;
+    border-right: 1px solid #dedfe1; border-bottom: 1px solid #dedfe1;
+    background: linear-gradient(#fff, #f1f2f4); text-align: center;
 }
-.client-name {
-    font-family: var(--font-display); font-size: clamp(1.4rem, 2.4vw, 2rem);
-    letter-spacing: 0.04em; line-height: 1.2; color: var(--off-white);
-    overflow-wrap: anywhere;
+.client-logo:not(.client-logo--repeat) { display: flex; }
+.client-logo img { width: 100%; height: 100%; max-width: 180px; max-height: 78px; object-fit: contain; }
+.client-logo-fallback { font-family: var(--font-display); font-size: 1.6rem; color: #222; overflow-wrap: anywhere; }
+@keyframes clients-scroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: no-preference) {
+    .clients-animated .clients-viewport {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    }
+    .clients-animated .clients-row--reverse { display: block; border-top: 2px solid #d7cbcd; }
+    .clients-animated .clients-track { display: flex; width: max-content; animation: clients-scroll var(--clients-duration, 32s) linear infinite; }
+    .clients-animated .clients-row--reverse .clients-track { animation-direction: reverse; }
+    .clients-animated .clients-group { display: flex; flex: 0 0 auto; min-width: 100vw; }
+    .clients-animated .client-logo { display: flex; flex: 1 0 clamp(160px, 16vw, 230px); }
+    .clients-animated.is-paused .clients-track,
+    .clients-animated .clients-viewport:hover .clients-track,
+    .clients-animated .clients-viewport:focus-within .clients-track { animation-play-state: paused; }
+}
+
+/* Our Client CMS */
+.client-admin-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.client-admin-table { overflow-x: auto; }
+.client-admin-table table { min-width: 600px; }
+.client-admin-thumbnail { width: 120px; height: 68px; object-fit: contain; padding: .7rem; background: #fff; }
+.client-admin-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.client-admin-empty { text-align: center; padding: 3rem; color: var(--mid-gray); }
+.client-admin-pagination { margin: 1.5rem 0; }
+.client-admin-note { margin-bottom: 1.5rem; font-size: .85rem; }
+.client-admin-form { max-width: 820px; }
+.client-admin-checkbox { display: flex; align-items: center; gap: .75rem; font-size: .85rem; }
+.client-admin-checkbox input { accent-color: var(--accent); }
+.client-admin-preview { display: flex; align-items: center; justify-content: center; height: 160px; margin-bottom: 1.5rem; padding: 1.5rem; background: #fff; color: #555; }
+.client-admin-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.client-admin-help { font-size: .75rem; margin-top: .65rem; }
+.client-admin-errors { padding: 1rem 2rem; border: 1px solid #c55; color: #ffaaaa; margin-bottom: 1.5rem; }
+.client-admin-form :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 900px) {
+    .clients-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .clients-intro { justify-self: start; max-width: 600px; }
 }
 
 /* ================================================
@@ -665,7 +712,6 @@ tbody tr:last-child td { border-bottom: none; }
    RESPONSIVE
    ================================================ */
 @media (max-width: 1024px) {
-    .clients-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .services-grid { grid-template-columns: 1fr; }
     .service-card  { border-right: none; }
     .service-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
@@ -680,10 +726,7 @@ tbody tr:last-child td { border-bottom: none; }
 
 @media (max-width: 768px) {
     .maintenance-grid { grid-template-columns: 1fr; }
-    .clients-header { grid-template-columns: 1fr; }
-    .clients-intro { justify-self: start; }
-    .clients-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .client-card { min-height: 120px; padding: 1.5rem 1rem; }
+    .client-logo { height: 108px; padding: 1.2rem; }
     :root { --nav-h: 62px; }
     .nav-links    { display: none; }
     .nav-hamburger { display: flex; }

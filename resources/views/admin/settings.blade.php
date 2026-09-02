@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label class="form-label">WhatsApp Number</label>
                     <input type="text" name="whatsapp" class="form-input" value="{{ old('whatsapp', $settings['whatsapp'] ?? '') }}" placeholder="628xxxxxxxxxx">
-                    <small style="color:rgba(255,255,255,.3);font-size:.72rem">Format: 628xxxxxxxxxx (country code, no +)</small>
+                    <small style="color:var(--cms-muted);font-size:.72rem">Format: 628xxxxxxxxxx (country code, no +)</small>
                 </div>
             </div>
             <div class="admin-form-row">
@@ -38,9 +38,9 @@
                     <textarea name="address" class="form-textarea" rows="2">{{ old('address', $settings['address'] ?? '') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Google Maps URL <span style="color:rgba(240,237,232,.3)">(opsional — override otomatis)</span></label>
+                    <label class="form-label">Google Maps URL <span style="color:var(--cms-muted)">(opsional — override otomatis)</span></label>
                     <input type="url" name="maps_url" class="form-input" value="{{ old('maps_url', $settings['maps_url'] ?? '') }}" placeholder="https://maps.app.goo.gl/...">
-                    <small style="color:rgba(240,237,232,.3);font-size:.72rem">Kosongkan = otomatis generate dari Address. Isi = pakai link spesifik (lebih akurat)</small>
+                    <small style="color:var(--cms-muted);font-size:.72rem">Kosongkan = otomatis generate dari Address. Isi = pakai link spesifik (lebih akurat)</small>
                 </div>
             </div>
         </div>
@@ -106,18 +106,18 @@
                     value="{{ old('gtm_id', $settings['gtm_id'] ?? '') }}"
                     placeholder="GTM-XXXXXXX"
                     style="font-family:monospace;letter-spacing:.05em">
-                <small style="color:rgba(255,255,255,.3);font-size:.72rem">
+                <small style="color:var(--cms-muted);font-size:.72rem">
                     Format: GTM-XXXXXXX &mdash; Kosongkan jika tidak ingin menggunakan GTM.
                     Script akan otomatis diinjeksi ke &lt;head&gt; dan &lt;body&gt; di semua halaman publik.
                 </small>
             </div>
             @if(!empty($settings['gtm_id']))
-            <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(100,220,100,.7);margin-top:.25rem">
+            <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--cms-success);margin-top:.25rem">
                 <span style="width:6px;height:6px;border-radius:50%;background:rgba(100,220,100,.7);display:inline-block"></span>
                 GTM aktif: <code style="font-size:.75rem;background:rgba(255,255,255,.06);padding:2px 8px;letter-spacing:.05em">{{ $settings['gtm_id'] }}</code>
             </div>
             @else
-            <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(255,255,255,.25);margin-top:.25rem">
+            <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--cms-muted);margin-top:.25rem">
                 <span style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);display:inline-block"></span>
                 GTM belum dikonfigurasi
             </div>

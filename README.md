@@ -125,6 +125,7 @@ Website bisa diakses di: **http://localhost:8000**
 |---|---|
 | Dashboard | Statistik & pesan terbaru |
 | Portfolio | Tambah/edit/hapus proyek |
+| Our Client | Upload logo, nama klien/mitra, urutan, dan status aktif/draft |
 | Services | Kelola layanan yang tampil |
 | Testimonials | Kelola review klien |
 | Messages | Lihat pesan dari form kontak |
@@ -162,9 +163,15 @@ Logo ditampilkan putih (`filter: brightness(0) invert(1)`) — pastikan logo pun
 Masuk ke **Admin → Settings** → bagian Statistics
 
 ### Our Client (homepage)
-Section **Our Client** berada di atas **Our Services**, setelah marquee. Nama klien diambil dari field **Client** pada portfolio aktif dan **Company** pada testimonial aktif, termasuk portfolio yang tidak featured. Nama kosong diabaikan dan nama yang sama ditampilkan sekali (tanpa membedakan huruf besar/kecil).
+Section **Klien dan Mitra Kami** berada di atas **Our Services**, setelah marquee layanan. Kelola datanya melalui menu khusus **Admin → Our Client** (`/admin/clients`), di sidebar antara Portfolio dan Services. Data tidak lagi diambil dari Portfolio atau Testimonials.
 
-Kelola nama melalui **Admin → Portfolio** atau **Admin → Testimonials**. Section memakai tampilan teks karena belum tersedia aset logo klien. Jika belum ada nama klien, section menampilkan ajakan kolaborasi dan tautan kontak tanpa nama contoh.
+1. Setelah memperbarui kode, siapkan backup lalu jalankan **Settings → System Maintenance → Migrate** untuk membuat tabel `clients`.
+2. Buka **Our Client → Tambah Klien**, isi nama, unggah logo PNG/JPG/WebP (maksimal 2 MB, 4000 × 4000 px), atur urutan, lalu simpan. Hanya data Aktif yang tampil.
+3. Gunakan **Edit** untuk mengganti logo, urutan, atau mengubah status menjadi Draft. **Hapus** menghapus data dan file logo; gunakan Draft untuk menyembunyikan tanpa menghapus.
+
+Logo tampil berwarna pada dua baris terang yang bergerak berlawanan arah, berhenti saat hover/fokus, dan bisa dijeda lewat tombol. Preferensi reduced motion serta browser tanpa JavaScript menampilkan grid statis. Jika kosong atau migrasi belum dijalankan, homepage tetap tersedia tanpa logo contoh. Logo pada gambar referensi tidak otomatis dianggap sebagai klien.
+
+Penyimpanan logo mengikuti upload lain di proyek: `storage/app/public/clients`. Pastikan symlink `public/storage` tersedia (`php artisan storage:link` sekali saat setup). Tes animasi tanpa dependensi: `node --test tests/clients-marquee.test.mjs`. Tes Laravel: `php artisan test --filter=ClientsTest`.
 
 ### Pemeliharaan dari CMS
 Masuk ke **Admin → Settings → System Maintenance**. Simpan perubahan Settings terlebih dahulu. Masukkan password akun CMS dan centang konfirmasi pada tindakan yang dipilih:
@@ -174,6 +181,9 @@ Masuk ke **Admin → Settings → System Maintenance**. Simpan perubahan Setting
 
 Keduanya memakai POST, CSRF, autentikasi CMS, verifikasi password, dan pembatasan request. Semua akun CMS memiliki akses sesuai model akses admin yang sudah ada. Hasil ditampilkan sebagai notifikasi; perintah dan status dicatat pada log server, tanpa menampilkan detail error internal kepada pengguna. File lock mencegah eksekusi bersamaan pada server yang sama dan tidak ikut terhapus oleh Optimize Clear. Untuk deployment multi-server, gunakan koordinasi pemeliharaan terpusat. Folder `storage/framework` harus writable.
 
+### Kontras tampilan CMS
+Warna CMS dan login dikelola terpisah di `public/css/admin.css`, melalui token `--cms-*` pada `html.cms-theme`. Halaman publik tidak memuat stylesheet ini. Teks utama, teks pendukung, placeholder, garis tabel/form, tombol, status, dan grafik menggunakan palet yang lebih terang. URL stylesheet memakai waktu modifikasi file agar browser memuat versi terbaru setelah update. Perubahan tema ini tidak memerlukan migrasi database. Cek palet dan isolasi CSS dengan `node --test tests/admin-theme.test.mjs`.
+
 ---
 
 ## 🗄️ Database Tables
@@ -182,6 +192,7 @@ Keduanya memakai POST, CSRF, autentikasi CMS, verifikasi password, dan pembatasa
 |---|---|
 | `users` | Admin user (Laravel default) |
 | `portfolios` | Item portofolio |
+| `clients` | Nama dan logo klien/mitra, urutan, status aktif |
 | `services` | Layanan perusahaan |
 | `testimonials` | Review klien |
 | `messages` | Pesan dari form kontak |

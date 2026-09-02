@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="form-label">Title *</label>
                         <input type="text" name="title" class="form-input" value="{{ old('title', $portfolio->title ?? '') }}" required>
-                        @error('title')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                        @error('title')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                     </div>
                     <div class="admin-form-row">
                         <div class="form-group">
@@ -68,7 +68,7 @@
                     </div>
                 @endif
                 <input type="file" name="thumbnail" class="form-input" accept="image/*" data-preview="thumb-preview" onchange="document.getElementById('preview-placeholder')?.style.setProperty('display','none');document.getElementById('thumb-preview').style.display='block'" style="padding:10px">
-                <p style="font-size:.72rem;margin-top:.5rem;color:rgba(255,255,255,.3)">JPG, PNG, WebP. Recommended: 1200×750px</p>
+                <p style="font-size:.72rem;margin-top:.5rem;color:var(--cms-muted)">JPG, PNG, WebP. Recommended: 1200×750px</p>
             </div>
 
             <div class="admin-section-card">

@@ -23,13 +23,13 @@
                         <label class="form-label">Nama Lengkap</label>
                         <input type="text" name="name" class="form-input"
                                value="{{ old('name', $user->name) }}" required>
-                        @error('name')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                        @error('name')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
                         <input type="email" name="email" class="form-input"
                                value="{{ old('email', $user->email) }}" required>
-                        @error('email')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                        @error('email')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                     </div>
                     <div style="display:flex;gap:.75rem;flex-wrap:wrap">
                         <button type="submit" class="btn btn-dark" style="padding:12px 28px">
@@ -46,11 +46,11 @@
             <div style="display:flex;flex-direction:column;gap:.8rem">
                 <div>
                     <div class="form-label" style="margin-bottom:3px">Member Sejak</div>
-                    <div style="font-size:.9rem;color:rgba(240,237,232,.65)">{{ $user->created_at->format('d M Y') }}</div>
+                    <div style="font-size:.9rem;color:var(--cms-secondary)">{{ $user->created_at->format('d M Y') }}</div>
                 </div>
                 <div>
                     <div class="form-label" style="margin-bottom:3px">Terakhir Diperbarui</div>
-                    <div style="font-size:.9rem;color:rgba(240,237,232,.65)">{{ $user->updated_at->diffForHumans() }}</div>
+                    <div style="font-size:.9rem;color:var(--cms-secondary)">{{ $user->updated_at->diffForHumans() }}</div>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                             <svg id="cur_eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
                     </div>
-                    @error('current_password')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                    @error('current_password')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
@@ -89,7 +89,7 @@
                             <svg id="new_eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
                     </div>
-                    @error('password')<span style="color:rgba(255,80,80,.8);font-size:.78rem">{{ $message }}</span>@enderror
+                    @error('password')<span style="color:var(--cms-danger);font-size:.78rem">{{ $message }}</span>@enderror
 
                     {{-- Strength bar --}}
                     <div style="margin-top:.5rem">
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <div style="padding:.75rem 1rem;background:rgba(212,197,169,.05);border:1px solid rgba(212,197,169,.12);border-radius:2px;font-size:.8rem;color:rgba(240,237,232,.45)">
+                <div style="padding:.75rem 1rem;background:rgba(212,197,169,.05);border:1px solid var(--cms-accent-border);border-radius:2px;font-size:.8rem;color:var(--cms-muted)">
                     Password harus minimal 8 karakter, mengandung huruf besar dan angka.
                 </div>
 
@@ -153,11 +153,11 @@ function checkStrength(pw) {
     if (/[^A-Za-z0-9]/.test(pw)) score++;
 
     var levels = [
-        { pct:'20%', color:'rgba(220,80,80,.8)',   label:'Sangat Lemah' },
-        { pct:'40%', color:'rgba(220,140,60,.8)',  label:'Lemah' },
-        { pct:'60%', color:'rgba(220,200,60,.8)',  label:'Cukup' },
-        { pct:'80%', color:'rgba(140,200,80,.8)',  label:'Kuat' },
-        { pct:'100%',color:'rgba(80,200,120,.8)',  label:'Sangat Kuat' },
+        { pct:'20%', color:'var(--cms-danger)',  label:'Sangat Lemah' },
+        { pct:'40%', color:'#f2bd86',            label:'Lemah' },
+        { pct:'60%', color:'var(--cms-accent)',  label:'Cukup' },
+        { pct:'80%', color:'#c5df9b',            label:'Kuat' },
+        { pct:'100%',color:'var(--cms-success)', label:'Sangat Kuat' },
     ];
     var lvl = levels[Math.min(score - 1, 4)] || levels[0];
     bar.style.width      = lvl.pct;

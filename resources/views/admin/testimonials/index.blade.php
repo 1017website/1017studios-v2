@@ -32,7 +32,7 @@
                 </td>
                 <td style="color:var(--mid-gray)">{{ $t->role }}</td>
                 <td style="color:var(--mid-gray)">{{ $t->company }}</td>
-                <td style="color:rgba(255,255,255,.4);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic">"{{ $t->quote }}"</td>
+                <td style="color:var(--cms-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic">"{{ $t->quote }}"</td>
                 <td style="color:var(--mid-gray)">{{ $t->order }}</td>
                 <td><span class="badge {{ $t->is_active ? 'badge-active' : 'badge-draft' }}">{{ $t->is_active ? 'Active' : 'Draft' }}</span></td>
                 <td>

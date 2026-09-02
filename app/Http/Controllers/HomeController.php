@@ -8,6 +8,8 @@ use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\Message;
 use App\Models\Setting;
+use App\Models\Client;
+use Illuminate\Support\Facades\Schema;
 
 class HomeController extends Controller
 {
@@ -22,14 +24,10 @@ class HomeController extends Controller
         $services     = Service::where('is_active', true)->orderBy('order')->get();
         $portfolios   = Portfolio::where('is_active', true)->where('is_featured', true)->orderBy('order')->take(5)->get();
         $testimonials = Testimonial::where('is_active', true)->orderBy('order')->get();
-        // Include all published projects, not just the five featured above.
-        $clients = Portfolio::where('is_active', true)
-            ->orderBy('order')->orderBy('id')->pluck('client')
-            ->concat($testimonials->pluck('company'))
-            ->map(fn ($name) => trim((string) $name))
-            ->filter(fn ($name) => $name !== '')
-            ->unique(fn ($name) => mb_strtolower($name))
-            ->values();
+        // Keep the homepage available while the new CMS migration is pending.
+        $clients = Schema::hasTable('clients')
+            ? Client::where('is_active', true)->orderBy('order')->orderBy('id')->get()
+            : collect();
         $stats = [
             'projects'     => $settings['stat_projects']     ?? 150,
             'clients'      => $settings['stat_clients']      ?? 80,

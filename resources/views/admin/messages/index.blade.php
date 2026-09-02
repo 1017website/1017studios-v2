@@ -26,10 +26,10 @@
             @forelse ($messages as $msg)
             <tr style="{{ !$msg->is_read ? 'background:rgba(255,255,255,.02)' : '' }}">
                 <td style="font-weight:{{ !$msg->is_read ? '500' : '400' }}">{{ $msg->name }}</td>
-                <td><a href="mailto:{{ $msg->email }}" style="color:var(--mid-gray);border-bottom:1px solid rgba(255,255,255,.1)">{{ $msg->email }}</a></td>
+                <td><a href="mailto:{{ $msg->email }}" style="color:var(--mid-gray);border-bottom:1px solid var(--cms-border)">{{ $msg->email }}</a></td>
                 <td style="color:var(--mid-gray)">{{ $msg->phone ?? '-' }}</td>
                 <td>{{ $msg->service ?? '-' }}</td>
-                <td style="color:rgba(255,255,255,.5);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ $msg->message }}</td>
+                <td style="color:var(--cms-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ $msg->message }}</td>
                 <td style="color:var(--mid-gray);white-space:nowrap">{{ $msg->created_at->format('d M Y, H:i') }}</td>
                 <td><span class="badge {{ $msg->is_read ? 'badge-draft' : 'badge-active' }}">{{ $msg->is_read ? 'Read' : 'New' }}</span></td>
                 <td>

@@ -29,7 +29,7 @@
             <tr>
                 <td>
                     <div style="display:flex;align-items:center;gap:.75rem">
-                        <div style="width:34px;height:34px;border-radius:50%;background:rgba(212,197,169,.15);border:1px solid rgba(212,197,169,.2);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.95rem;color:var(--accent);flex-shrink:0">
+                        <div style="width:34px;height:34px;border-radius:50%;background:rgba(212,197,169,.15);border:1px solid var(--cms-accent-border);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.95rem;color:var(--accent);flex-shrink:0">
                             {{ strtoupper(substr($user->name, 0, 1)) }}
                         </div>
                         <div>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </td>
-                <td style="color:rgba(240,237,232,.55)">{{ $user->email }}</td>
+                <td style="color:var(--cms-muted)">{{ $user->email }}</td>
                 <td style="color:var(--mid-gray)">{{ $user->created_at->format('d M Y') }}</td>
                 <td>
                     <span class="badge badge-active">Active</span>

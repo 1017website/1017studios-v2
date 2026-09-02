@@ -1,0 +1,97 @@
+/* CMS-only contrast theme. Public pages keep app.css unchanged. */
+html.cms-theme {
+    color-scheme: dark;
+    --cms-text: #f4f6fb;
+    --cms-secondary: #d8dde6;
+    --cms-muted: #b8c0cc;
+    --cms-border: #77808e;
+    --cms-border-strong: #9aa5b5;
+    --cms-danger: #ffb1ad;
+    --cms-danger-border: #d47772;
+    --cms-success: #b6e6bf;
+    --cms-success-border: #79b486;
+    --cms-accent: #f0d4a3;
+    --cms-accent-border: #ac926b;
+    --cms-input: #1c1f25;
+    --cms-chart-secondary: #a9bedc;
+    --cms-chart-tertiary: #a4c9b0;
+    --bg: #17191d;
+    --bg-2: #21242a;
+    --bg-3: #2c3038;
+    --bg-card: #21242a;
+    --white: var(--cms-text);
+    --off-white: var(--cms-secondary);
+    --mid-gray: var(--cms-muted);
+    --light-gray: var(--cms-muted);
+    --border: var(--cms-border);
+    --border-hover: var(--cms-border-strong);
+    --accent: var(--cms-accent);
+}
+
+.cms-theme body { color: var(--cms-text); }
+.cms-theme p { color: var(--cms-secondary); font-weight: 400; }
+.cms-theme small { color: var(--cms-muted); }
+.cms-theme .noise-overlay { opacity: .008; }
+.cms-theme .admin-topbar { background: var(--bg); }
+.cms-theme .admin-sidebar { scrollbar-color: var(--cms-border) var(--bg-2); }
+
+.cms-theme .admin-nav-item { color: var(--cms-secondary); font-weight: 500; }
+.cms-theme .admin-nav-item svg { opacity: 1; }
+.cms-theme .admin-nav-item:hover { background: var(--bg-3); color: var(--cms-text); }
+.cms-theme .admin-nav-item.active { background: var(--bg-3); color: var(--cms-text); border-left-color: var(--cms-accent); }
+.cms-theme .admin-nav-section { color: var(--cms-muted); font-size: .7rem; font-weight: 500; letter-spacing: .16em; }
+.cms-theme .admin-page-sub,
+.cms-theme .admin-stat-label { color: var(--cms-muted); }
+.cms-theme .admin-table-title,
+.cms-theme .admin-section-card-title { color: var(--cms-secondary); font-weight: 500; }
+.cms-theme .admin-section-card-title { font-size: .75rem; }
+
+.cms-theme thead th { color: var(--cms-secondary); font-size: .72rem; letter-spacing: .1em; background: var(--bg-3); }
+.cms-theme tbody td { color: var(--cms-secondary); border-bottom-color: var(--cms-border); }
+.cms-theme tbody tr:hover td { background: var(--bg-3); }
+.cms-theme .badge { font-size: .68rem; font-weight: 500; }
+.cms-theme .badge-active { color: var(--cms-accent); border-color: var(--cms-accent-border); background: #302a20; }
+.cms-theme .badge-draft { color: var(--cms-secondary); border-color: var(--cms-border); background: var(--bg-3); }
+
+.cms-theme .form-label { color: var(--cms-secondary); font-size: .73rem; font-weight: 500; letter-spacing: .12em; }
+.cms-theme .form-input,
+.cms-theme .form-textarea,
+.cms-theme .form-select { color: var(--cms-text); background: var(--cms-input); border-color: var(--cms-border-strong); }
+.cms-theme .form-input::placeholder,
+.cms-theme .form-textarea::placeholder { color: var(--cms-muted); opacity: 1; }
+.cms-theme .form-input:focus,
+.cms-theme .form-textarea:focus,
+.cms-theme .form-select:focus { border-color: var(--cms-accent); background: var(--cms-input); }
+.cms-theme .form-select option { background: var(--cms-input); color: var(--cms-text); }
+.cms-theme input[type="checkbox"],
+.cms-theme input[type="radio"] { accent-color: var(--cms-accent); }
+.cms-theme input[type="file"]::file-selector-button {
+    background: var(--bg-3); color: var(--cms-text); border: 1px solid var(--cms-border-strong);
+    padding: .4rem .7rem; margin-right: .75rem; font: inherit;
+}
+.cms-theme :is(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--cms-accent); outline-offset: 3px;
+}
+
+.cms-theme .action-btn { color: var(--cms-text); border-color: var(--cms-border-strong); background: var(--bg-3); font-weight: 500; }
+.cms-theme .action-btn:hover { color: var(--cms-text); border-color: var(--cms-text); background: #363d48; }
+.cms-theme .action-btn.danger { color: var(--cms-danger); border-color: var(--cms-danger-border); background: #352326; }
+.cms-theme .action-btn.danger:hover { color: var(--cms-danger); border-color: var(--cms-danger); background: #482b2e; }
+.cms-theme .btn { border-color: var(--cms-border-strong); }
+.cms-theme .btn:hover { border-color: var(--cms-text); }
+.cms-theme .btn-dark { border-color: var(--cms-text); }
+.cms-theme .btn-dark:hover { border-color: var(--cms-border-strong); }
+.cms-theme .seo-tab-btn { border: 1px solid var(--cms-border); color: var(--cms-secondary); background: var(--bg-2); }
+.cms-theme .seo-tab-btn:hover { border-color: var(--cms-border-strong); }
+.cms-theme .seo-tab-btn.tab-active { color: var(--cms-text); border-color: var(--cms-accent); background: var(--bg-3); }
+
+.cms-theme .flash-message { color: var(--cms-accent); border-color: var(--cms-accent-border); }
+.cms-theme .maintenance-errors,
+.cms-theme .client-admin-errors,
+.cms-theme .login-error { color: var(--cms-danger); border-color: var(--cms-danger-border); }
+.cms-theme .maintenance-form .maintenance-warning { color: var(--cms-accent); }
+.cms-theme .login-label,
+.cms-theme .remember-text { color: var(--cms-secondary); }
+.cms-theme .login-back a { color: var(--cms-muted); border-color: var(--cms-border); }
+.cms-theme .login-back a:hover { color: var(--cms-text); }
+.cms-theme .login-btn:hover { border-color: var(--cms-border-strong); }

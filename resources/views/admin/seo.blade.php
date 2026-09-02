@@ -11,7 +11,7 @@
     <button
         onclick="switchTab('{{ $key }}')"
         id="tab-btn-{{ $key }}"
-        style="padding:.55rem 1.2rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.4);cursor:pointer;font-family:inherit;transition:all .2s"
+        style="padding:.55rem 1.2rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all .2s"
         class="seo-tab-btn {{ $loop->first ? 'tab-active' : '' }}"
     >{{ $label }}</button>
     @endforeach
@@ -30,19 +30,19 @@
         <div class="admin-section-card-title">Meta Tags — {{ $label }}</div>
         <div class="admin-form">
             <div class="form-group">
-                <label class="form-label">Meta Title <span style="color:rgba(255,255,255,.3)">(max 200 chars)</span></label>
+                <label class="form-label">Meta Title <span style="color:var(--cms-muted)">(max 200 chars)</span></label>
                 <input type="text" name="meta_title" class="form-input" maxlength="200"
                     value="{{ old('meta_title', $s['meta_title'] ?? '') }}"
                     placeholder="e.g. 1017Studios | Branding & Digital Agency Surabaya">
-                <small style="color:rgba(255,255,255,.3);font-size:.72rem">Leave blank to use the default title from HomeController.</small>
+                <small style="color:var(--cms-muted);font-size:.72rem">Leave blank to use the default title from HomeController.</small>
             </div>
             <div class="form-group">
-                <label class="form-label">Meta Description <span style="color:rgba(255,255,255,.3)">(max 320 chars)</span></label>
+                <label class="form-label">Meta Description <span style="color:var(--cms-muted)">(max 320 chars)</span></label>
                 <textarea name="meta_description" class="form-textarea" rows="3" maxlength="320"
                     placeholder="Short description shown in Google search results...">{{ old('meta_description', $s['meta_description'] ?? '') }}</textarea>
             </div>
             <div class="form-group">
-                <label class="form-label">Meta Keywords <span style="color:rgba(255,255,255,.3)">(comma separated)</span></label>
+                <label class="form-label">Meta Keywords <span style="color:var(--cms-muted)">(comma separated)</span></label>
                 <input type="text" name="meta_keywords" class="form-input" maxlength="500"
                     value="{{ old('meta_keywords', $s['meta_keywords'] ?? '') }}"
                     placeholder="branding agency surabaya, web developer surabaya, ...">
@@ -62,7 +62,7 @@
                         placeholder="Title when shared on Facebook, Twitter, etc.">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">OG Image URL <span style="color:rgba(255,255,255,.3)">(1200×630px recommended)</span></label>
+                    <label class="form-label">OG Image URL <span style="color:var(--cms-muted)">(1200×630px recommended)</span></label>
                     <input type="url" name="og_image" class="form-input" maxlength="500"
                         value="{{ old('og_image', $s['og_image'] ?? '') }}"
                         placeholder="https://1017studios.com/images/og-home.jpg">
@@ -88,7 +88,7 @@
                 @error('schema_json')
                     <small style="color:#ff8080">{{ $message }}</small>
                 @enderror
-                <small style="color:rgba(255,255,255,.3);font-size:.72rem">Paste valid JSON-LD. Will be injected in a &lt;script type="application/ld+json"&gt; tag.</small>
+                <small style="color:var(--cms-muted);font-size:.72rem">Paste valid JSON-LD. Will be injected in a &lt;script type="application/ld+json"&gt; tag.</small>
             </div>
         </div>
     </div>
@@ -122,7 +122,7 @@
 .seo-tab-btn.tab-active {
     background: rgba(255,255,255,.08);
     color: var(--white);
-    border-color: rgba(255,255,255,.3);
+    border-color: var(--cms-border);
 }
 </style>
 

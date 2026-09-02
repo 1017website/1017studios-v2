@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="cms-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +57,7 @@
         }
         .cursor-follower {
             width: 38px; height: 38px;
-            border: 1.5px solid rgba(240,237,232,0.28);
+            border: 1.5px solid var(--cms-border);
             border-radius: 50%;
             position: fixed; top: 0; left: 0;
             pointer-events: none;
@@ -101,17 +101,17 @@
             font-size: 0.72rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: rgba(240,237,232,0.25);
+            color: var(--cms-muted);
         }
 
         /* Error box */
         .login-error {
-            border: 1px solid rgba(220,80,80,0.25);
+            border: 1px solid var(--cms-danger-border);
             background: rgba(220,80,80,0.06);
             padding: 0.9rem 1.2rem;
             margin-bottom: 1.5rem;
             font-size: 0.85rem;
-            color: rgba(230,110,110,0.9);
+            color: var(--cms-danger);
             border-radius: 2px;
         }
 
@@ -147,8 +147,8 @@
             -webkit-box-shadow: 0 0 0 100px var(--bg-2) inset !important;
             -webkit-text-fill-color: var(--white) !important;
         }
-        .form-input:focus { border-color: rgba(240,237,232,0.3); }
-        .form-input::placeholder { color: rgba(240,237,232,0.18); }
+        .form-input:focus { border-color: var(--cms-border); }
+        .form-input::placeholder { color: var(--cms-muted); }
 
         /* Remember me */
         .remember-label {
@@ -164,7 +164,7 @@
         }
         .remember-text {
             font-size: 0.82rem;
-            color: rgba(240,237,232,0.4);
+            color: var(--cms-muted);
         }
 
         /* Submit button */
@@ -189,7 +189,7 @@
         .login-btn:hover {
             background: var(--bg-3);
             color: var(--white);
-            border-color: rgba(240,237,232,0.25);
+            border-color: var(--cms-border);
         }
 
         /* Back link */
@@ -199,14 +199,14 @@
         }
         .login-back a {
             font-size: 0.76rem;
-            color: rgba(240,237,232,0.22);
+            color: var(--cms-muted);
             letter-spacing: 0.06em;
-            border-bottom: 1px solid rgba(240,237,232,0.1);
+            border-bottom: 1px solid var(--cms-border);
             padding-bottom: 1px;
             text-decoration: none;
             transition: color 0.2s;
         }
-        .login-back a:hover { color: rgba(240,237,232,0.55); }
+        .login-back a:hover { color: var(--cms-muted); }
 
         /* Subtle background accent */
         body::before {
@@ -222,6 +222,7 @@
             .cursor, .cursor-follower { display: none; }
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ filemtime(public_path('css/admin.css')) }}">
 </head>
 <body>
 

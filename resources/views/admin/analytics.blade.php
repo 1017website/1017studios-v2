@@ -9,7 +9,7 @@
     </div>
     <form method="GET" action="{{ route('admin.analytics') }}" style="display:flex;gap:.5rem;align-items:center">
         <select name="range" onchange="this.form.submit()"
-            style="background:var(--bg-3);border:1px solid rgba(255,255,255,.12);color:var(--white);padding:.5rem .85rem;font-size:.82rem;font-family:inherit;cursor:pointer">
+            style="background:var(--bg-3);border:1px solid var(--cms-border);color:var(--white);padding:.5rem .85rem;font-size:.82rem;font-family:inherit;cursor:pointer">
             <option value="7"   {{ $range=='7'  ?'selected':'' }}>Last 7 days</option>
             <option value="30"  {{ $range=='30' ?'selected':'' }}>Last 30 days</option>
             <option value="90"  {{ $range=='90' ?'selected':'' }}>Last 90 days</option>
@@ -43,18 +43,18 @@
 </div>
 
 {{-- ── Google API Budget Monitor ─────────────────────────────────────────── --}}
-<div class="admin-section-card" style="margin-bottom:2rem;border-color:{{ $googleUsage['is_exceeded'] ? 'rgba(255,100,100,.3)' : 'rgba(255,255,255,.08)' }}">
+<div class="admin-section-card" style="margin-bottom:2rem;border-color:{{ $googleUsage['is_exceeded'] ? 'var(--cms-danger-border)' : 'var(--cms-border)' }}">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
         <div>
             <div class="admin-section-card-title" style="margin:0">
                 Google Places API — Budget Monitor
                 @if($googleUsage['is_exceeded'])
-                    <span style="margin-left:.75rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,100,100,.8);border:1px solid rgba(255,100,100,.3);padding:2px 8px">LIMIT REACHED</span>
+                    <span style="margin-left:.75rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cms-danger);border:1px solid var(--cms-danger-border);padding:2px 8px">LIMIT REACHED</span>
                 @else
-                    <span style="margin-left:.75rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(100,220,100,.7);border:1px solid rgba(100,220,100,.2);padding:2px 8px">ACTIVE</span>
+                    <span style="margin-left:.75rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cms-success);border:1px solid var(--cms-success-border);padding:2px 8px">ACTIVE</span>
                 @endif
             </div>
-            <div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.3rem">
+            <div style="font-size:.78rem;color:var(--cms-muted);margin-top:.3rem">
                 Cache: {{ $googleUsage['cache_ttl'] }} menit &nbsp;·&nbsp; Status: {{ $googleUsage['cache_expires'] }}
             </div>
         </div>
@@ -62,10 +62,7 @@
             {{-- Refresh cache --}}
             <form method="POST" action="{{ route('admin.reviews.refresh') }}">
                 @csrf
-                <button type="submit"
-                    style="padding:.5rem 1.1rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit;transition:all .2s"
-                    onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.4)'"
-                    onmouseout="this.style.color='rgba(255,255,255,.6)';this.style.borderColor='rgba(255,255,255,.15)'">
+                <button type="submit" class="action-btn" style="padding:.5rem 1.1rem;font-size:.75rem">
                     ↻ Refresh Cache
                 </button>
             </form>
@@ -73,10 +70,7 @@
             <form method="POST" action="{{ route('admin.analytics.reset-google') }}"
                   onsubmit="return confirm('Reset counter API Google bulan ini? Hanya lakukan jika yakin limit belum tercapai.')">
                 @csrf
-                <button type="submit"
-                    style="padding:.5rem 1.1rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,100,100,.2);background:transparent;color:rgba(255,120,120,.6);cursor:pointer;font-family:inherit;transition:all .2s"
-                    onmouseover="this.style.color='rgba(255,120,120,.9)';this.style.borderColor='rgba(255,100,100,.5)'"
-                    onmouseout="this.style.color='rgba(255,120,120,.6)';this.style.borderColor='rgba(255,100,100,.2)'">
+                <button type="submit" class="action-btn danger" style="padding:.5rem 1.1rem;font-size:.75rem">
                     Reset Counter
                 </button>
             </form>
@@ -84,27 +78,27 @@
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+        <div style="background:rgba(255,255,255,.03);border:1px solid var(--cms-border);padding:1rem">
             <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">{{ $googleUsage['count'] }}</div>
-            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Request Bulan Ini</div>
+            <div style="font-size:.73rem;color:var(--cms-muted);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Request Bulan Ini</div>
         </div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+        <div style="background:rgba(255,255,255,.03);border:1px solid var(--cms-border);padding:1rem">
             <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">{{ $googleUsage['limit'] }}</div>
-            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Batas Bulanan</div>
+            <div style="font-size:.73rem;color:var(--cms-muted);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Batas Bulanan</div>
         </div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+        <div style="background:rgba(255,255,255,.03);border:1px solid var(--cms-border);padding:1rem">
             <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">${{ $googleUsage['estimated_cost'] }}</div>
-            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Estimasi Biaya</div>
+            <div style="font-size:.73rem;color:var(--cms-muted);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Estimasi Biaya</div>
         </div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:1rem">
+        <div style="background:rgba(255,255,255,.03);border:1px solid var(--cms-border);padding:1rem">
             <div style="font-size:1.6rem;font-family:var(--font-display);letter-spacing:-.02em">{{ $googleUsage['remaining'] }}</div>
-            <div style="font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Sisa Request</div>
+            <div style="font-size:.73rem;color:var(--cms-muted);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em">Sisa Request</div>
         </div>
     </div>
 
     {{-- Progress bar --}}
     <div>
-        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.35);margin-bottom:.5rem">
+        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--cms-muted);margin-bottom:.5rem">
             <span>Penggunaan bulan ini</span>
             <span>{{ $googleUsage['percentage'] }}% dari limit</span>
         </div>
@@ -117,9 +111,9 @@
                 transition:width .6s
             "></div>
         </div>
-        <div style="font-size:.72rem;color:rgba(255,255,255,.25);margin-top:.6rem">
+        <div style="font-size:.72rem;color:var(--cms-muted);margin-top:.6rem">
             Free tier Google: ~{{ number_format($googleUsage['free_tier_max']) }} request/bulan ($200 credit).
-            Limit Anda: {{ $googleUsage['limit'] }} request — <strong style="color:rgba(255,255,255,.4)">jauh di bawah biaya</strong>.
+            Limit Anda: {{ $googleUsage['limit'] }} request — <strong style="color:var(--cms-muted)">jauh di bawah biaya</strong>.
             Ubah via <code style="font-size:.7rem;background:rgba(255,255,255,.06);padding:1px 5px">GOOGLE_REVIEWS_MONTHLY_LIMIT</code> di .env
         </div>
     </div>
@@ -130,9 +124,9 @@
 <div class="admin-section-card" style="margin-bottom:2rem">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
         <div class="admin-section-card-title" style="margin:0">Daily Traffic (Last {{ $range }} Days)</div>
-        <div style="display:flex;gap:1rem;font-size:.75rem;color:rgba(255,255,255,.4)">
-            <span style="display:flex;align-items:center;gap:.4rem"><span style="width:12px;height:3px;background:#d4c5a9;display:inline-block"></span> Views</span>
-            <span style="display:flex;align-items:center;gap:.4rem"><span style="width:12px;height:3px;background:rgba(212,197,169,.35);display:inline-block"></span> Unique</span>
+        <div style="display:flex;gap:1rem;font-size:.75rem;color:var(--cms-muted)">
+            <span style="display:flex;align-items:center;gap:.4rem"><span style="width:12px;height:3px;background:var(--cms-accent);display:inline-block"></span> Views</span>
+            <span style="display:flex;align-items:center;gap:.4rem"><span style="width:12px;height:3px;background:var(--cms-chart-secondary);display:inline-block"></span> Unique</span>
         </div>
     </div>
     <canvas id="dailyChart" height="90"></canvas>
@@ -167,7 +161,7 @@
                 <span style="color:var(--mid-gray);white-space:nowrap;margin-left:.5rem">{{ number_format($ref->visits) }} <span style="font-size:.72rem">({{ $pct2 }}%)</span></span>
             </div>
             <div style="background:rgba(255,255,255,.06);height:4px;border-radius:2px">
-                <div style="width:{{ $pct2 }}%;background:rgba(212,197,169,.5);height:100%;border-radius:2px"></div>
+                <div style="width:{{ $pct2 }}%;background:var(--cms-chart-secondary);height:100%;border-radius:2px"></div>
             </div>
         </div>
         @empty
@@ -187,15 +181,15 @@
         @php $dTotal = max($deviceDesktop + $deviceMobile + $deviceTablet, 1); @endphp
         <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem;font-size:.82rem">
             <div style="display:flex;justify-content:space-between">
-                <span><span style="width:10px;height:10px;background:#d4c5a9;border-radius:50%;display:inline-block;margin-right:.4rem"></span>Desktop</span>
+                <span><span style="width:10px;height:10px;background:var(--cms-accent);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Desktop</span>
                 <span style="color:var(--mid-gray)">{{ $deviceDesktop }} ({{ round($deviceDesktop/$dTotal*100) }}%)</span>
             </div>
             <div style="display:flex;justify-content:space-between">
-                <span><span style="width:10px;height:10px;background:rgba(212,197,169,.5);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Mobile</span>
+                <span><span style="width:10px;height:10px;background:var(--cms-chart-secondary);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Mobile</span>
                 <span style="color:var(--mid-gray)">{{ $deviceMobile }} ({{ round($deviceMobile/$dTotal*100) }}%)</span>
             </div>
             <div style="display:flex;justify-content:space-between">
-                <span><span style="width:10px;height:10px;background:rgba(212,197,169,.2);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Tablet</span>
+                <span><span style="width:10px;height:10px;background:var(--cms-chart-tertiary);border-radius:50%;display:inline-block;margin-right:.4rem"></span>Tablet</span>
                 <span style="color:var(--mid-gray)">{{ $deviceTablet }} ({{ round($deviceTablet/$dTotal*100) }}%)</span>
             </div>
         </div>
@@ -205,7 +199,7 @@
 <div style="text-align:right">
     <form method="POST" action="{{ route('admin.analytics.purge') }}" onsubmit="return confirm('Purge visitor logs older than 1 year?')">
         @csrf
-        <button type="submit" style="background:transparent;border:1px solid rgba(255,80,80,.25);color:rgba(255,120,120,.6);padding:.5rem 1.2rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit">
+        <button type="submit" style="background:transparent;border:1px solid var(--cms-danger-border);color:var(--cms-danger);padding:.5rem 1.2rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit">
             Purge Old Logs (&gt;1 year)
         </button>
     </form>
@@ -213,10 +207,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-Chart.defaults.color = 'rgba(255,255,255,.35)';
-Chart.defaults.borderColor = 'rgba(255,255,255,.06)';
+const cmsTheme = getComputedStyle(document.documentElement);
+const cmsColor = name => cmsTheme.getPropertyValue(name).trim();
+Chart.defaults.color = cmsColor('--cms-muted');
+Chart.defaults.borderColor = cmsColor('--cms-border');
 Chart.defaults.font.family = 'DM Sans, sans-serif';
-const accent = '#d4c5a9';
+const accent = cmsColor('--cms-accent');
+const secondary = cmsColor('--cms-chart-secondary');
+const tertiary = cmsColor('--cms-chart-tertiary');
 
 new Chart(document.getElementById('dailyChart'), {
     type: 'line',
@@ -224,7 +222,7 @@ new Chart(document.getElementById('dailyChart'), {
         labels: @json($chartDates),
         datasets: [
             { label:'Views', data:@json($chartViews), borderColor:accent, backgroundColor:'rgba(212,197,169,0.08)', fill:true, tension:0.4, pointRadius:{{ count($chartDates) > 30 ? 0 : 3 }}, borderWidth:1.5 },
-            { label:'Unique', data:@json($chartUniqueVisitors), borderColor:'rgba(212,197,169,0.35)', fill:false, tension:0.4, pointRadius:0, borderWidth:1.5, borderDash:[4,3] }
+            { label:'Unique', data:@json($chartUniqueVisitors), borderColor:secondary, fill:false, tension:0.4, pointRadius:0, borderWidth:2, borderDash:[4,3] }
         ]
     },
     options: { responsive:true, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{ x:{ticks:{maxTicksLimit:12}}, y:{beginAtZero:true,ticks:{precision:0}} } }
@@ -235,8 +233,8 @@ new Chart(document.getElementById('monthlyChart'), {
     data: {
         labels: @json($months),
         datasets: [
-            { label:'Views', data:@json($monthViews2), backgroundColor:'rgba(212,197,169,0.25)', borderColor:accent, borderWidth:1, borderRadius:3 },
-            { label:'Unique', data:@json($monthUnique), backgroundColor:'rgba(212,197,169,0.08)', borderColor:'rgba(212,197,169,0.3)', borderWidth:1, borderRadius:3 }
+            { label:'Views', data:@json($monthViews2), backgroundColor:accent, borderColor:accent, borderWidth:1, borderRadius:3 },
+            { label:'Unique', data:@json($monthUnique), backgroundColor:secondary, borderColor:secondary, borderWidth:1, borderRadius:3 }
         ]
     },
     options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,ticks:{precision:0}} } }
@@ -246,7 +244,7 @@ new Chart(document.getElementById('deviceChart'), {
     type: 'doughnut',
     data: {
         labels: ['Desktop','Mobile','Tablet'],
-        datasets: [{ data:[{{ $deviceDesktop }},{{ $deviceMobile }},{{ $deviceTablet }}], backgroundColor:[accent,'rgba(212,197,169,0.45)','rgba(212,197,169,0.15)'], borderColor:'transparent' }]
+        datasets: [{ data:[{{ $deviceDesktop }},{{ $deviceMobile }},{{ $deviceTablet }}], backgroundColor:[accent,secondary,tertiary], borderColor:cmsColor('--bg-card'), borderWidth:2 }]
     },
     options: { responsive:true, cutout:'65%', plugins:{legend:{display:false}} }
 });

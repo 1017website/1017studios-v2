@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\MaintenanceController;
+use App\Http\Controllers\Admin\ClientController;
 
 // ============================================================
 // PUBLIC ROUTES
@@ -43,6 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('portfolio', PortfolioController::class)->except(['show']);
+        Route::resource('clients', ClientController::class)->except(['show']);
         Route::resource('services', ServiceController::class)->except(['show']);
         Route::resource('testimonials', TestimonialController::class)->except(['show']);
 

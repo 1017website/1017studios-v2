@@ -23,7 +23,7 @@
             <tr>
                 <td style="color:var(--mid-gray)">{{ $service->order }}</td>
                 <td style="font-weight:500">{{ $service->title }}</td>
-                <td style="color:rgba(255,255,255,.4);font-size:.82rem">{{ Str::limit($service->tags, 60) }}</td>
+                <td style="color:var(--cms-muted);font-size:.82rem">{{ Str::limit($service->tags, 60) }}</td>
                 <td><span class="badge {{ $service->is_active ? 'badge-active' : 'badge-draft' }}">{{ $service->is_active ? 'Active' : 'Draft' }}</span></td>
                 <td>
                     <div style="display:flex;gap:.5rem">
